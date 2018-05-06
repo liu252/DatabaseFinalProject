@@ -16,51 +16,36 @@ public class InputChecker
             minimum = min;
             hasRange = true;
         }
-        
+
         int inputCheck = 0;
         boolean inputValid = false;
         while(!inputValid)
         {
             String input = null;
-            try
-            {
-                input = br.readLine();
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            try
-            {
+            try { input = br.readLine(); }
+            catch (IOException e) { e.printStackTrace(); }
+
+            try {
                 inputCheck = Integer.parseInt(input);
-                if (hasRange)
-                {
-                    if (inputCheck > max)
-                    {
-                        System.out.println("Integer out of scope, must be lower than " + maximum);
-                    } else if (inputCheck < min)
-                    {
-                        System.out.println("Integer out of scope, must be higher than " + minimum);
-                    } else
-                    {
-                        inputValid = true;
+                if (hasRange) {
+                    if (inputCheck > max) {
+                        System.out.println("Choice out of range, must be lower than " + maximum);
                     }
-                } else
-                {
-                    inputValid = true;
+                    else if (inputCheck < min) {
+                        System.out.println("Choice out of range, must be higher than " + minimum);
+                    }
+                    else { inputValid = true; }
                 }
-            } catch (NumberFormatException e)
-            {
+                else { inputValid = true; }
+            }
+            catch (NumberFormatException e) {
                 System.out.println(input + " is not a valid integer number");
             }
         }
-        
         return inputCheck;
-        
-        
     }
-    
-    public void doubleCheck(String input, int max, int min)
+
+    /*public void doubleCheck(String input, int max, int min)
     {
-    
-    }
+    }*/
 }
