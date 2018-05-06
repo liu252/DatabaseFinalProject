@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 public class DBFunctions
@@ -84,35 +86,26 @@ public class DBFunctions
 
             System.out.printf("%-5s%-22s\n", "#", "Weapon Name");
             boolean first = true;
-            int min = 0;
+            int min = 1;
             int max = 0;
-
+    
+            List<CustomHero> customHeroes = new ArrayList<CustomHero>();
+            
             while(rs.next())
             {
-                if(first)
-                {
-                    min = rs.getInt("weapon_ID");
-                    max = rs.getInt("weapon_ID") - 1 ;
-                    first = false;
-                }
-                max++;
-                System.out.printf("%-5s%-22s\n", rs.getString("weapon_ID") + ".", rs.getString("weapon_name"));
+                CustomHero heroForList = new CustomHero();
+                heroForList.setWeaponID(rs.getInt("weapon_ID"));
+                heroForList.setWeaponATK(rs.getInt("weapon_strength"));
+                System.out.printf("%-5s%-22s\n", max + ".", rs.getString("weapon_name"));
             }
             int selection = ic.readInteger(max, min);
-            cs = con.prepareCall("CALL SelectWeapon(?)");
-            cs.clearParameters();
-            cs.setInt(1, selection);
-            rs = cs.executeQuery();
-
-            while(rs.next())
+            hero.setWeaponID(customHeroes.get(selection).getWeaponID());
+            hero.setATK(hero.getATK() + customHeroes.get(selection).getWeaponATK());
+            if(hero.getWeaponID() == 2 || hero.getWeaponID() == 16 || hero.getWeaponID() == 33)
             {
-                hero.setWeaponID(rs.getInt("weapon_ID"));
-                hero.setATK(hero.getATK() + rs.getInt("weapon_strength"));
-                if(rs.getInt("weapon_ID") == 2 || rs.getInt("weapon_ID") == 16 || rs.getInt("weapon_ID") == 33)
-                {
-                    hero.setSPD(hero.getSPD() - 5);
-                }
+                hero.setSPD(hero.getSPD() - 5);
             }
+
 
         }
         catch (SQLException e)

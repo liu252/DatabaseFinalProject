@@ -3,6 +3,7 @@ public class CustomHero
     private int heroID;
     private String heroName;
     private int weaponID;
+    private int weaponATK;
     private int weaponType;
     private int assistID;
     private int specialID;
@@ -125,5 +126,15 @@ public class CustomHero
 
     public void setWeaponType(int weaponType) {
         this.weaponType = weaponType;
+    }
+    
+    public int getWeaponATK()
+    {
+        return weaponATK;
+    }
+    
+    public void setWeaponATK(int weaponATK)
+    {
+        this.weaponATK = weaponATK;
     }
 }
