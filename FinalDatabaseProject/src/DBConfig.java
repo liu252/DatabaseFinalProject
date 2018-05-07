@@ -8,7 +8,7 @@ public class DBConfig {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             String connectionURL = "jdbc:mysql://localhost:3306/databasefinalproj?useSSL=false";
-            mySQLConnection = DriverManager.getConnection(connectionURL, "java", "javaProjects");
+            mySQLConnection = DriverManager.getConnection(connectionURL, "Legaci", "theLegaci0");
         }
         catch(Exception ex){
             ex.printStackTrace();

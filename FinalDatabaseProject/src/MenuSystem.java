@@ -12,7 +12,7 @@ public class MenuSystem
         System.out.println("2: Saved Custom Heroes"); //View all saved heroes.
         System.out.println("3:"); //Delete
         System.out.println("4:"); //Query
-        System.out.println("5:"); //Query with Filter?
+        System.out.println("5: Hero Lookup By Weapon Type"); //Query with Filter?
         System.out.println("6:"); //Comparisons
         System.out.println("7:"); //Quit
 
@@ -33,6 +33,7 @@ public class MenuSystem
 
         }
         else if (menuOptionChosen == 5) {
+            heroLookUp();
 
         }
         else if (menuOptionChosen == 6) {
@@ -71,4 +72,8 @@ public class MenuSystem
         System.out.println("Your hero has been saved in the database.");
     }
 
+    private void heroLookUp()
+    {
+        dbf.displayHeroes();
+    }
 }

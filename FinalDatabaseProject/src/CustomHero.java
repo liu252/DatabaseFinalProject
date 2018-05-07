@@ -127,14 +127,12 @@ public class CustomHero
     public void setWeaponType(int weaponType) {
         this.weaponType = weaponType;
     }
-    
-    public int getWeaponATK()
-    {
+
+    public int getWeaponATK(){
         return weaponATK;
     }
-    
-    public void setWeaponATK(int weaponATK)
-    {
+
+    public void setWeaponATK(int weaponATK) {
         this.weaponATK = weaponATK;
     }
 }

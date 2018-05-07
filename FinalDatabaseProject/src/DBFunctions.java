@@ -424,5 +424,71 @@ public class DBFunctions
             e.printStackTrace();
         }
     }
+
+    public void displayHeroes()
+    {
+        try
+        {
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM weapon_types");
+            ResultSet rs = pst.executeQuery();
+
+            System.out.printf("%-5s%-22s\n", "#", "Weapon Type");
+            boolean first = true;
+            int min = 0;
+            int max = 0;
+
+            while(rs.next())
+            {
+                if(first)
+                {
+                    min = rs.getInt("weapontypeID");
+                    max = rs.getInt("weapontypeID") - 1 ;
+                    first = false;
+                }
+                max++;
+                System.out.printf("%-5s%-22s\n", rs.getString("weapontypeID") + ".", rs.getString("weapon_type_name"));
+            }
+
+            int selection = ic.readInteger(max, min);
+
+            pst = con.prepareStatement("SELECT hero_ID, hero_name FROM herocatalog WHERE weapon_type = ?");
+            pst.clearParameters();
+            pst.setInt(1, selection);
+            rs = pst.executeQuery();
+
+            min = 1;
+            max = 1;
+
+            List<CustomHero> customHeroes = new ArrayList<CustomHero>();
+
+            while(rs.next())
+            {
+                CustomHero heroForList = new CustomHero();
+                heroForList.setHeroID(rs.getInt("hero_ID"));
+                heroForList.setHeroName(rs.getString("hero_name"));
+                customHeroes.add(heroForList);
+                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("hero_name"));
+            }
+
+            selection = ic.readInteger(max, min);
+            pst = con.prepareStatement("SELECT * FROM herocatalog WHERE hero_ID = ?");
+            pst.clearParameters();
+            pst.setInt(1, customHeroes.get(selection - 1).getHeroID());
+            rs = pst.executeQuery();
+
+            while(rs.next())
+            {
+                System.out.println("Hero: " + rs.getString("hero_name"));
+                System.out.print("HP:" + rs.getInt("HP"));
+                System.out.print(" ATK:" + rs.getInt("ATK"));
+                System.out.print(" SPD:" + rs.getInt("SPD"));
+                System.out.print(" DEF:" + rs.getInt("DEF"));
+                System.out.print(" RES:" + rs.getInt("RES"));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
