@@ -352,28 +352,27 @@ public class DBFunctions
             ResultSet rs = cs.executeQuery();
 
             System.out.printf("%-5s%-22s\n", "#", "Hero Name");
-            boolean first = false;
-            int min = 0;
-            int max = 0;
+            int min = 1;
+            int max = 1;
+
+            List<CustomHero> customHeroes = new ArrayList<CustomHero>();
 
             while(rs.next())
             {
-                if(!first)
-                {
-                    min = rs.getInt("hero_ID");
-                    max = rs.getInt("hero_ID") - 1 ;
-                    first = true;
-                }
-                max++;
-                System.out.printf("%-5s%-22s\n", rs.getString("hero_ID") + ".", rs.getString("hero_name"));
+                CustomHero heroForList = new CustomHero();
+                heroForList.setHeroID(rs.getInt("hero_ID"));
+                heroForList.setHeroName(rs.getString("hero_name"));
+                customHeroes.add(heroForList);
+                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("hero_name"));
             }
 
             int selection = ic.readInteger(max, min);
             cs = con.prepareCall("CALL SelectCustomHero(?)");
             cs.clearParameters();
-            cs.setInt(1, selection);
+            cs.setInt(1, customHeroes.get(selection - 1).getHeroID());
 
             rs = cs.executeQuery();
+
 
             while(rs.next())
             {
@@ -418,6 +417,42 @@ public class DBFunctions
 
                 System.out.println();
             }
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteCustomHero()
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayCustomHeroes()");
+            ResultSet rs = cs.executeQuery();
+
+            System.out.printf("%-5s%-22s\n", "#", "Hero Name");
+            int min = 1;
+            int max = 1;
+
+            List<CustomHero> customHeroes = new ArrayList<CustomHero>();
+
+            while(rs.next())
+            {
+                CustomHero heroForList = new CustomHero();
+                heroForList.setHeroID(rs.getInt("hero_ID"));
+                heroForList.setHeroName(rs.getString("hero_name"));
+                customHeroes.add(heroForList);
+                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("hero_name"));
+            }
+
+            int selection = ic.readInteger(max, min);
+            PreparedStatement pst = con.prepareStatement("UPDATE customheroes SET isDeleted = 1 WHERE hero_ID = ?");
+            pst.clearParameters();
+            pst.setInt(1, customHeroes.get(selection - 1).getHeroID());
+            pst.executeUpdate();
+
+            System.out.println("Custom hero has been soft deleted.");
 
         }
         catch (SQLException e) {
