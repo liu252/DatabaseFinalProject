@@ -85,7 +85,6 @@ public class DBFunctions
             ResultSet rs = cs.executeQuery();
 
             System.out.printf("%-5s%-22s\n", "#", "Weapon Name");
-            boolean first = true;
             int min = 1;
             int max = 1;
 
