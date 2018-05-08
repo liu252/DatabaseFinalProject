@@ -1,5 +1,6 @@
 import com.mysql.fabric.xmlrpc.base.Value;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.CallableStatement;
@@ -343,34 +344,16 @@ public class DBFunctions
         }
     }
 
-    public void viewCustomHero()
+    public void viewCustomHero(int heroID)
     {
         try
         {
-            CallableStatement cs = con.prepareCall("CALL DisplayCustomHeroes()");
-            ResultSet rs = cs.executeQuery();
-
-            System.out.printf("%-5s%-22s\n", "#", "Hero Name");
-            int min = 1;
-            int max = 1;
-
-            List<CustomHero> customHeroes = new ArrayList<CustomHero>();
-
-            while(rs.next())
-            {
-                CustomHero heroForList = new CustomHero();
-                heroForList.setHeroID(rs.getInt("hero_ID"));
-                heroForList.setHeroName(rs.getString("hero_name"));
-                customHeroes.add(heroForList);
-                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("hero_name"));
-            }
-
-            int selection = ic.readInteger(max, min);
-            cs = con.prepareCall("CALL SelectCustomHero(?)");
+            
+            CallableStatement cs = con.prepareCall("CALL SelectCustomHero(?)");
             cs.clearParameters();
-            cs.setInt(1, customHeroes.get(selection - 1).getHeroID());
+            cs.setInt(1, heroID);
 
-            rs = cs.executeQuery();
+            ResultSet rs = cs.executeQuery();
 
 
             while(rs.next())
@@ -379,18 +362,24 @@ public class DBFunctions
                 System.out.println(rs.getString("hero_name"));
 
                 PreparedStatement pst = con.prepareStatement("SELECT weapon_name FROM weapons WHERE weapon_ID = ?");
-                pst.clearParameters(); pst.setInt(1, rs.getInt("weapon"));
-                ResultSet rs2 = pst.executeQuery(); rs2.next();
+                pst.clearParameters();
+                pst.setInt(1, rs.getInt("weapon"));
+                ResultSet rs2 = pst.executeQuery();
+                rs2.next();
                 System.out.println(rs2.getString(1));
 
                 pst = con.prepareStatement("SELECT assist_name FROM assists WHERE assist_ID = ?");
-                pst.clearParameters(); pst.setInt(1, rs.getInt("assist_skill"));
-                rs2 = pst.executeQuery(); rs2.next();
+                pst.clearParameters();
+                pst.setInt(1, rs.getInt("assist_skill"));
+                rs2 = pst.executeQuery();
+                rs2.next();
                 System.out.println(rs2.getString(1));
 
                 pst = con.prepareStatement("SELECT special_name FROM specials WHERE special_ID = ?");
-                pst.clearParameters(); pst.setInt(1, rs.getInt("special_skill"));
-                rs2 = pst.executeQuery(); rs2.next();
+                pst.clearParameters();
+                pst.setInt(1, rs.getInt("special_skill"));
+                rs2 = pst.executeQuery();
+                rs2.next();
                 System.out.println(rs2.getString(1));
 
                 System.out.println("HP:  " + rs.getInt("HP"));
@@ -400,18 +389,24 @@ public class DBFunctions
                 System.out.println("RES: " + rs.getInt("RES"));
 
                 pst = con.prepareStatement("SELECT slotA_name FROM slota_skills WHERE slotA_ID = ?");
-                pst.clearParameters(); pst.setInt(1, rs.getInt("slotA_skill"));
-                rs2 = pst.executeQuery(); rs2.next();
+                pst.clearParameters();
+                pst.setInt(1, rs.getInt("slotA_skill"));
+                rs2 = pst.executeQuery();
+                rs2.next();
                 System.out.println(rs2.getString(1));
 
                 pst = con.prepareStatement("SELECT slotB_name FROM slotb_skills WHERE slotB_ID = ?");
-                pst.clearParameters(); pst.setInt(1, rs.getInt("slotB_skill"));
-                rs2 = pst.executeQuery(); rs2.next();
+                pst.clearParameters();
+                pst.setInt(1, rs.getInt("slotB_skill"));
+                rs2 = pst.executeQuery();
+                rs2.next();
                 System.out.println(rs2.getString(1));
 
                 pst = con.prepareStatement("SELECT slotC_name FROM slotc_skills WHERE slotC_ID = ?");
-                pst.clearParameters(); pst.setInt(1, rs.getInt("slotC_skill"));
-                rs2 = pst.executeQuery(); rs2.next();
+                pst.clearParameters();
+                pst.setInt(1, rs.getInt("slotC_skill"));
+                rs2 = pst.executeQuery();
+                rs2.next();
                 System.out.println(rs2.getString(1));
 
                 System.out.println();
@@ -423,32 +418,13 @@ public class DBFunctions
         }
     }
 
-    public void deleteCustomHero()
+    public void deleteCustomHero(int heroID)
     {
         try
         {
-            CallableStatement cs = con.prepareCall("CALL DisplayCustomHeroes()");
-            ResultSet rs = cs.executeQuery();
-
-            System.out.printf("%-5s%-22s\n", "#", "Hero Name");
-            int min = 1;
-            int max = 1;
-
-            List<CustomHero> customHeroes = new ArrayList<CustomHero>();
-
-            while(rs.next())
-            {
-                CustomHero heroForList = new CustomHero();
-                heroForList.setHeroID(rs.getInt("hero_ID"));
-                heroForList.setHeroName(rs.getString("hero_name"));
-                customHeroes.add(heroForList);
-                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("hero_name"));
-            }
-
-            int selection = ic.readInteger(max, min);
             PreparedStatement pst = con.prepareStatement("UPDATE customheroes SET isDeleted = 1 WHERE hero_ID = ?");
             pst.clearParameters();
-            pst.setInt(1, customHeroes.get(selection - 1).getHeroID());
+            pst.setInt(1, heroID);
             pst.executeUpdate();
 
             System.out.println("Custom hero has been soft deleted.");
@@ -459,7 +435,7 @@ public class DBFunctions
         }
     }
 
-    public void displayHeroes()
+    public void displayHeroesByWeaponType()
     {
         try
         {
@@ -484,7 +460,8 @@ public class DBFunctions
             }
 
             int selection = ic.readInteger(max, min);
-
+            
+            
             pst = con.prepareStatement("SELECT hero_ID, hero_name FROM herocatalog WHERE weapon_type = ?");
             pst.clearParameters();
             pst.setInt(1, selection);
@@ -523,6 +500,120 @@ public class DBFunctions
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    
+    public int displayAllCustomHeroes()
+    {
+        int heroID = 0;
+    
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayCustomHeroes()");
+            ResultSet rs = cs.executeQuery();
+    
+            System.out.printf("%-5s%-22s\n", "#", "Hero Name");
+            int min = 1;
+            int max = 1;
+    
+            List<CustomHero> customHeroes = new ArrayList<CustomHero>();
+    
+            while(rs.next())
+            {
+                CustomHero heroForList = new CustomHero();
+                heroForList.setHeroID(rs.getInt("hero_ID"));
+                heroForList.setHeroName(rs.getString("hero_name"));
+                customHeroes.add(heroForList);
+                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("hero_name"));
+            }
+    
+            int selection = ic.readInteger(max, min);
+            
+            heroID = customHeroes.get(selection).getHeroID();
+            
+            
+            
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return heroID;
+    }
+    
+    public CustomHero findCustomHeroForUpdate(int updateSelection)
+    {
+        CustomHero hero = new CustomHero();
+    
+        try
+        {
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM customheroes WHERE hero_ID = ?");
+            pst.clearParameters();
+            pst.setInt(1,updateSelection);
+            ResultSet rs = pst.executeQuery();
+            
+            while (rs.next())
+            {
+                hero.setHeroID(rs.getInt("hero_ID"));
+                hero.setHeroName(rs.getString("hero_name"));
+                hero.setWeaponID(rs.getInt("weapon"));
+                hero.setAssistID(rs.getInt("assist_skill"));
+                hero.setSpecialID(rs.getInt("special_skill"));
+                hero.setHP(rs.getInt("HP"));
+                hero.setATK(rs.getInt("ATK"));
+                hero.setDEF(rs.getInt("DEF"));
+                hero.setRES(rs.getInt("RES"));
+                hero.setSlotASkill(rs.getInt("slotA_skill"));
+                hero.setSlotBSkill(rs.getInt("slotB_skill"));
+                hero.setSlotCSkill(rs.getInt("slotC_skill"));
+            }
+            
+            pst = con.prepareStatement("SELECT weapon_type FROM weapons WHERE weapon_ID = ?");
+            pst.clearParameters();
+            pst.setInt(1, hero.getWeaponID());
+            rs = pst.executeQuery();
+            
+            while (rs.next())
+            {
+                hero.setWeaponType(rs.getInt("weapon_type"));
+            }
+            
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    
+        return hero;
+    }
+    
+    public void updateCustomHero(CustomHero heroInfo)
+    {
+        CustomHero hero = heroInfo;
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL UpdateCustomHero(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            cs.clearParameters();
+            cs.setString(1, hero.getHeroName());
+            cs.setInt(2, hero.getWeaponID());
+            cs.setInt(3, hero.getAssistID());
+            cs.setInt(4, hero.getSpecialID());
+            cs.setInt(5, hero.getHP());
+            cs.setInt(6, hero.getATK());
+            cs.setInt(7, hero.getSPD());
+            cs.setInt(8, hero.getDEF());
+            cs.setInt(9, hero.getRES());
+            cs.setInt(10, hero.getSlotASkill());
+            cs.setInt(11, hero.getSlotBSkill());
+            cs.setInt(12, hero.getSlotCSkill());
+            cs.setInt(13, hero.getHeroID());
+            cs.executeQuery();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
     }
 }
 

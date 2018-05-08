@@ -14,7 +14,7 @@ public class MenuSystem
             System.out.println("1: Create a Custom Hero"); //Create
             System.out.println("2: Saved Custom Heroes"); //View all saved heroes.
             System.out.println("3: Delete Custom Heroes"); //Delete
-            System.out.println("4:"); //Query
+            System.out.println("4: Update Custom Heroes"); //Update
             System.out.println("5: Hero Lookup By Weapon Type"); //Query with Filter?
             System.out.println("6:"); //Comparisons
             System.out.println("7: Quit"); //Quit
@@ -24,19 +24,20 @@ public class MenuSystem
     
             if (menuOptionChosen == 1)
             {
-                addHero();
+                addCustomHero();
             }
             else if (menuOptionChosen == 2)
             {
-                System.out.println("Select a saved hero to view info:");
-                dbf.viewCustomHero();
+                viewCustomHeroes();
             }
             else if (menuOptionChosen == 3)
             {
-                dbf.deleteCustomHero();
+                deleteCustomHero();
+                
             }
             else if (menuOptionChosen == 4)
             {
+                updateCustomHero();
         
             } else if (menuOptionChosen == 5)
             {
@@ -53,13 +54,79 @@ public class MenuSystem
             }
         }
     }
-
-    private void updateMenu()
+    
+    private void viewCustomHeroes()
     {
-
+        System.out.println("Select a saved hero to view info:");
+        int viewSelection = dbf.displayAllCustomHeroes();
+        dbf.viewCustomHero(viewSelection);
+    }
+    
+    private void deleteCustomHero()
+    {
+        int deleteSelection = dbf.displayAllCustomHeroes();
+        dbf.deleteCustomHero(deleteSelection);
+    }
+    
+    private void updateCustomHero()
+    {
+        System.out.println("Select Character to Update: ");
+        int updateSelection = dbf.displayAllCustomHeroes();
+        CustomHero hero = dbf.findCustomHeroForUpdate(updateSelection);
+        System.out.println("What attribute would you like to update?");
+        System.out.println("1. Change Weapon");
+        System.out.println("2. Change Assist Skill");
+        System.out.println("3. Change Special Skill");
+        System.out.println("4. Change A Slot Skill");
+        System.out.println("5. Change B Slot Skill");
+        System.out.println("6. Change C Slot Skill");
+        System.out.println("7. Do Nothing");
+        int selection = ic.readInteger(7,1);
+        boolean cancelUpdate = false;
+        if (selection == 1)
+        {
+            hero = dbf.chooseWeaponFromDB(hero);
+        }
+        else if (selection == 2)
+        {
+            hero = dbf.chooseAssistFromDB(hero);
+        }
+        else if (selection == 3)
+        {
+            hero = dbf.chooseSpecialFromDB(hero);
+        
+        }
+        else if (selection == 4)
+        {
+            hero = dbf.chooseASkillFromDB(hero);
+        
+        } else if (selection == 5)
+        {
+            hero = dbf.chooseBSkillFromDB(hero);
+        
+        }
+        else if (selection == 6)
+        {
+            hero = dbf.chooseCSkillFromDB(hero);
+        }
+        else if (selection == 7)
+        {
+            cancelUpdate = true;
+        }
+        
+        if (!cancelUpdate)
+        {
+            dbf.updateCustomHero(hero);
+            System.out.println("Hero Update Successful!");
+        }
+        else
+        {
+            System.out.println("Hero Update Canceled");
+        }
+        
     }
 
-    private void addHero()
+    private void addCustomHero()
     {
         System.out.println("Select Character:");
         CustomHero hero = dbf.chooseHeroFromDB();
@@ -82,6 +149,7 @@ public class MenuSystem
 
     private void heroLookUp()
     {
-        dbf.displayHeroes();
+        dbf.displayHeroesByWeaponType();
+        
     }
 }
