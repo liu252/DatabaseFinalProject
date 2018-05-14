@@ -1,0 +1,32 @@
+New Procedures and Views for Brian:
+May 13 2018 6:00 PM
+
+CREATE PROCEDURE DisplayCustomHeroesWithDetails(IN ID INT)
+SELECT customheroes.hero_name, w.weapon_name, a.assist_name, s.special_name,customheroes.HP, customheroes.ATK,customheroes.SPD, customheroes.DEF,customheroes.RES, sa.slotA_name, sb.slotB_name, sc.slotC_name
+FROM customheroes
+  JOIN weapons w ON customheroes.weapon = w.weapon_ID
+  JOIN assists a ON customheroes.assist_skill = a.assist_ID
+  JOIN specials s ON customheroes.special_skill = s.special_ID
+  JOIN slota_skills sa ON customheroes.slotA_skill = sa.slotA_ID
+  JOIN slotb_skills sb ON customheroes.slotB_skill = sb.slotB_ID
+  JOIN slotc_skills sc ON customheroes.slotC_skill = sc.slotC_ID
+WHERE hero_ID = ID;
+
+CREATE PROCEDURE DisplayHeroCatalog()
+SELECT herocatalog.hero_name, wt.weapon_type_name, m.movement_type_name, herocatalog.HP, herocatalog.ATK, herocatalog.SPD, herocatalog.DEF, herocatalog.RES
+FROM herocatalog
+  JOIN weapon_types wt ON herocatalog.weapon_type = wt.weapontypeID
+  JOIN movement_types m ON herocatalog.movement_type = m.movement_type_ID;
+
+
+CREATE VIEW WeaponsCatalog AS
+SELECT weapons.weapon_name, wt.weapon_type_name, weapons.weapon_strength, weapons.weapon_effect, weapons.weapon_type
+FROM weapons, (SELECT weapontypeID, weapon_type_name FROM weapon_types) wt
+WHERE weapons.weapon_type = wt.weapontypeID;
+
+
+CREATE PROCEDURE DisplayWeaponsCatalogByType(IN ID INT)
+SELECT weapon_name, weapon_type_name, weapon_strength, weapon_effect
+FROM WeaponsCatalog
+WHERE weapon_type = ID
+ORDER BY weapon_type_name, weapon_strength DESC

@@ -12,15 +12,16 @@ public class MenuSystem
         {
             System.out.println("Welcome to the Fire Emblem Heroes Database!");
             System.out.println("1: Create a Custom Hero"); //Create
-            System.out.println("2: Saved Custom Heroes"); //View all saved heroes.
-            System.out.println("3: Delete Custom Heroes"); //Delete
-            System.out.println("4: Update Custom Heroes"); //Update
-            System.out.println("5: Hero Lookup By Weapon Type"); //Query with Filter?
-            System.out.println("6:"); //Comparisons
-            System.out.println("7: Quit"); //Quit
+            System.out.println("2: View Custom Heroes"); //View all saved heroes.
+            System.out.println("3: Update Custom Heroes"); //Delete
+            System.out.println("4: Delete Custom Heroes"); //Update
+            System.out.println("5: Display Hero Catalog"); //Query with Filter?
+            System.out.println("6: Display Weapon Catalog");
+            System.out.println("7: Hero Lookup by Weapon Type"); //Comparisons
+            System.out.println("8: Quit"); //Quit
     
             System.out.print("Enter Menu Choice: ");
-            int menuOptionChosen = ic.readInteger(7, 1);
+            int menuOptionChosen = ic.readInteger(8, 1);
     
             if (menuOptionChosen == 1)
             {
@@ -32,27 +33,64 @@ public class MenuSystem
             }
             else if (menuOptionChosen == 3)
             {
-                deleteCustomHero();
+                updateCustomHero();
                 
             }
             else if (menuOptionChosen == 4)
             {
-                updateCustomHero();
+                deleteCustomHero();
         
-            } else if (menuOptionChosen == 5)
+            }
+            else if (menuOptionChosen == 5)
             {
-                heroLookUp();
+                displayHeroCatalog();
         
             }
             else if (menuOptionChosen == 6)
             {
-            
+                displayWeaponCatalog();
             }
             else if (menuOptionChosen == 7)
+            {
+                heroLookUpByWeaponType();
+            }
+            else if (menuOptionChosen == 8)
             {
                 quit = true;
             }
         }
+    }
+    
+    private void displayWeaponCatalog()
+    {
+        System.out.println("1. Display Entire Weapons Catalog");
+        System.out.println("2. Display Weapons by Type");
+        System.out.println("3. Display Strongest Weapons");
+        System.out.println("4. Display Strongest Weapons by Type");
+        System.out.println("5. Return to Main Menu");
+        int weaponsCatalogMenuSelection = ic.readInteger(5,1);
+        if (weaponsCatalogMenuSelection == 1)
+        {
+            dbf.viewEntireWeaponsCatalog();
+        }
+        else if (weaponsCatalogMenuSelection == 2)
+        {
+            CustomHero weaponTypeSelection = dbf.displayWeaponTypes();
+            dbf.viewWeaponsCatalogByType(weaponTypeSelection);
+        }
+        else if (weaponsCatalogMenuSelection == 3)
+        {
+    
+        }
+        else if (weaponsCatalogMenuSelection == 4)
+        {
+    
+        }
+    }
+    
+    private void displayHeroCatalog()
+    {
+        dbf.viewHeroCatalog();
     }
     
     private void viewCustomHeroes()
@@ -147,7 +185,7 @@ public class MenuSystem
         System.out.println("Your hero has been saved in the database.");
     }
 
-    private void heroLookUp()
+    private void heroLookUpByWeaponType()
     {
         dbf.displayHeroesByWeaponType();
         

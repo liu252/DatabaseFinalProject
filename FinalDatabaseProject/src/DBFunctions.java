@@ -349,67 +349,17 @@ public class DBFunctions
         try
         {
 
-            CallableStatement cs = con.prepareCall("CALL SelectCustomHero(?)");
+            CallableStatement cs = con.prepareCall("CALL DisplayCustomHeroesWithDetails(?)");
             cs.clearParameters();
             cs.setInt(1, heroID);
 
             ResultSet rs = cs.executeQuery();
-
+    
+            System.out.printf("%-15s%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-10s%-20s%-20s%-20s\n", "Hero", "Weapon", "Assist Skill", "Special", "HP", "ATK", "SPD", "DEF", "RES", "Slot A", "SlotB", "SlotC");
 
             while(rs.next())
             {
-                System.out.println();
-                System.out.println(rs.getString("hero_name"));
-
-                PreparedStatement pst = con.prepareStatement("SELECT weapon_name FROM weapons WHERE weapon_ID = ?");
-                pst.clearParameters();
-                pst.setInt(1, rs.getInt("weapon"));
-                ResultSet rs2 = pst.executeQuery();
-                rs2.next();
-                System.out.println(rs2.getString(1));
-
-                pst = con.prepareStatement("SELECT assist_name FROM assists WHERE assist_ID = ?");
-                pst.clearParameters();
-                pst.setInt(1, rs.getInt("assist_skill"));
-                rs2 = pst.executeQuery();
-                rs2.next();
-                System.out.println(rs2.getString(1));
-
-                pst = con.prepareStatement("SELECT special_name FROM specials WHERE special_ID = ?");
-                pst.clearParameters();
-                pst.setInt(1, rs.getInt("special_skill"));
-                rs2 = pst.executeQuery();
-                rs2.next();
-                System.out.println(rs2.getString(1));
-
-                System.out.println("HP:  " + rs.getInt("HP"));
-                System.out.println("ATK: " + rs.getInt("ATK"));
-                System.out.println("SPD: " + rs.getInt("SPD"));
-                System.out.println("DEF: " + rs.getInt("DEF"));
-                System.out.println("RES: " + rs.getInt("RES"));
-
-                pst = con.prepareStatement("SELECT slotA_name FROM slota_skills WHERE slotA_ID = ?");
-                pst.clearParameters();
-                pst.setInt(1, rs.getInt("slotA_skill"));
-                rs2 = pst.executeQuery();
-                rs2.next();
-                System.out.println(rs2.getString(1));
-
-                pst = con.prepareStatement("SELECT slotB_name FROM slotb_skills WHERE slotB_ID = ?");
-                pst.clearParameters();
-                pst.setInt(1, rs.getInt("slotB_skill"));
-                rs2 = pst.executeQuery();
-                rs2.next();
-                System.out.println(rs2.getString(1));
-
-                pst = con.prepareStatement("SELECT slotC_name FROM slotc_skills WHERE slotC_ID = ?");
-                pst.clearParameters();
-                pst.setInt(1, rs.getInt("slotC_skill"));
-                rs2 = pst.executeQuery();
-                rs2.next();
-                System.out.println(rs2.getString(1));
-
-                System.out.println();
+                System.out.printf("%-15s%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-10s%-20s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12));
             }
 
         }
@@ -495,6 +445,7 @@ public class DBFunctions
                 System.out.print(" SPD:" + rs.getInt("SPD"));
                 System.out.print(" DEF:" + rs.getInt("DEF"));
                 System.out.print(" RES:" + rs.getInt("RES"));
+                System.out.println();
             }
         }
         catch (SQLException e) {
@@ -614,5 +565,103 @@ public class DBFunctions
             e.printStackTrace();
         }
 
+    }
+    
+    public void viewHeroCatalog()
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalog()");
+            ResultSet rs = cs.executeQuery();
+    
+            System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", "Hero Name", "Weapon Type", "Movement Type", "HP", "ATK", "SPD", "DEF", "RES");
+            
+            while(rs.next())
+            {
+                System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewEntireWeaponsCatalog()
+    {
+        try
+        {
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM weaponscatalog");
+            ResultSet rs = pst.executeQuery();
+    
+            System.out.printf("%-20s%-15s%-20s%-20s\n", "Weapon Name", "Weapon Type", "Weapon Strength", "Weapon Effect");
+            
+            while(rs.next())
+            {
+                System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public CustomHero displayWeaponTypes()
+    {
+        CustomHero userSelection = new CustomHero();
+        try
+        {
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM weapon_types");
+            ResultSet rs = pst.executeQuery();
+            
+            System.out.println("Please select the weapon type you would like to display");
+            int min = 1;
+            int max = 1;
+    
+            List<CustomHero> customHeroes = new ArrayList<CustomHero>();
+    
+            while(rs.next())
+            {
+                CustomHero heroForList = new CustomHero();
+                heroForList.setWeaponType(rs.getInt("weapontypeID"));
+                customHeroes.add(heroForList);
+                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("weapon_type_name"));
+            }
+    
+            int selection = ic.readInteger(max, min);
+            userSelection.setWeaponType(customHeroes.get(selection - 1).getWeaponType());
+            
+            
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return userSelection;
+    
+    }
+    
+    public void viewWeaponsCatalogByType(CustomHero weaponTypeSelection)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayWeaponsCatalogByType(?)");
+            cs.clearParameters();
+            cs.setInt(1,weaponTypeSelection.getWeaponType());
+            ResultSet rs = cs.executeQuery();
+        
+            System.out.printf("%-20s%-15s%-20s%-20s\n", "Weapon Name", "Weapon Type", "Weapon Strength", "Weapon Effect");
+        
+            while(rs.next())
+            {
+                System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
