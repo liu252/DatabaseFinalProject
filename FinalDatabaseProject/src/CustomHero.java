@@ -5,6 +5,7 @@ public class CustomHero
     private int weaponID;
     private int weaponATK;
     private int weaponType;
+    private int movementType;
     private int assistID;
     private int specialID;
     private int HP;
@@ -134,5 +135,15 @@ public class CustomHero
 
     public void setWeaponATK(int weaponATK) {
         this.weaponATK = weaponATK;
+    }
+    
+    public int getMovementType()
+    {
+        return movementType;
+    }
+    
+    public void setMovementType(int movementType)
+    {
+        this.movementType = movementType;
     }
 }

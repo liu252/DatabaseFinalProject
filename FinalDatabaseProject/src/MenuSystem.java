@@ -17,11 +17,10 @@ public class MenuSystem
             System.out.println("4: Delete Custom Heroes"); //Update
             System.out.println("5: Display Hero Catalog"); //Query with Filter?
             System.out.println("6: Display Weapon Catalog");
-            System.out.println("7: Hero Lookup by Weapon Type"); //Comparisons
-            System.out.println("8: Quit"); //Quit
+            System.out.println("7: Quit"); //Quit
     
             System.out.print("Enter Menu Choice: ");
-            int menuOptionChosen = ic.readInteger(8, 1);
+            int menuOptionChosen = ic.readInteger(7, 1);
     
             if (menuOptionChosen == 1)
             {
@@ -52,10 +51,6 @@ public class MenuSystem
             }
             else if (menuOptionChosen == 7)
             {
-                heroLookUpByWeaponType();
-            }
-            else if (menuOptionChosen == 8)
-            {
                 quit = true;
             }
         }
@@ -65,8 +60,8 @@ public class MenuSystem
     {
         System.out.println("1. Display Entire Weapons Catalog");
         System.out.println("2. Display Weapons by Type");
-        System.out.println("3. Display Strongest Weapons");
-        System.out.println("4. Display Strongest Weapons by Type");
+        System.out.println("3. Display Strongest Weapons in Weapon Catalog");
+        System.out.println("4. Display Strongest Weapons by Weapon Strength");
         System.out.println("5. Return to Main Menu");
         int weaponsCatalogMenuSelection = ic.readInteger(5,1);
         if (weaponsCatalogMenuSelection == 1)
@@ -80,17 +75,55 @@ public class MenuSystem
         }
         else if (weaponsCatalogMenuSelection == 3)
         {
-    
+            dbf.viewStrongestWeaponInWeaponsCatalog();
         }
         else if (weaponsCatalogMenuSelection == 4)
         {
-    
+            System.out.print("Please enter the minimum strength required for weapon: ");
+            int strength = ic.readInteger(0,0);
+            dbf.viewStrongestWeaponInWeaponsCatalogByStrength(strength);
         }
     }
     
     private void displayHeroCatalog()
     {
-        dbf.viewHeroCatalog();
+        System.out.println("1. Display Entire Hero Catalog");
+        System.out.println("2. Display Hero Catalog by Weapon Type");
+        System.out.println("3. Display Hero Catalog by Movement Type");
+        System.out.println("4. Display Hero Catalog by Stats");
+        System.out.println("5. Return to Main Menu");
+        int heroCatalogMenuSelection = ic.readInteger(5,1);
+        if (heroCatalogMenuSelection == 1)
+        {
+            dbf.viewHeroCatalog();
+        }
+        else if (heroCatalogMenuSelection == 2)
+        {
+            CustomHero weaponSelection = dbf.displayWeaponTypes();
+            dbf.viewHeroCatalogByWeaponType(weaponSelection);
+            
+        }
+        else if (heroCatalogMenuSelection == 3)
+        {
+            CustomHero movementSelection = dbf.displayMovementTypes();
+            dbf.viewHeroCatalogByMovementType(movementSelection);
+        }
+        else if (heroCatalogMenuSelection == 4)
+        {
+            System.out.println("Please choose stat to display by:");
+            System.out.println("1. HP");
+            System.out.println("2. ATK");
+            System.out.println("3. SPD");
+            System.out.println("4. DEF");
+            System.out.println("5. RES");
+            int heroCatalogStatSelection = ic.readInteger(5,1);
+            System.out.println("Please choose a sign: "); //what is hits called
+            System.out.println("1. Greater Than");
+            System.out.println("2. Less Than");
+            System.out.println("3. Equals To");
+            int heroCatalogSignSelection = ic.readInteger(3,1);
+        }
+        
     }
     
     private void viewCustomHeroes()
@@ -185,9 +218,5 @@ public class MenuSystem
         System.out.println("Your hero has been saved in the database.");
     }
 
-    private void heroLookUpByWeaponType()
-    {
-        dbf.displayHeroesByWeaponType();
-        
-    }
+
 }

@@ -1,6 +1,9 @@
 import com.mysql.fabric.xmlrpc.base.Value;
+import com.opencsv.CSVWriter;
 
 import javax.xml.transform.Result;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.CallableStatement;
@@ -87,7 +90,7 @@ public class DBFunctions
 
             System.out.printf("%-5s%-22s\n", "#", "Weapon Name");
             int min = 1;
-            int max = 1;
+            int max = 0;
 
             List<CustomHero> customHeroes = new ArrayList<CustomHero>();
 
@@ -97,7 +100,8 @@ public class DBFunctions
                 heroForList.setWeaponID(rs.getInt("weapon_ID"));
                 heroForList.setWeaponATK(rs.getInt("weapon_strength"));
                 customHeroes.add(heroForList);
-                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("weapon_name"));
+                max++;
+                System.out.printf("%-5s%-22s\n", max + ".", rs.getString("weapon_name"));
             }
 
             int selection = ic.readInteger(max, min);
@@ -361,7 +365,9 @@ public class DBFunctions
             {
                 System.out.printf("%-15s%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-10s%-20s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12));
             }
-
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+            
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -384,74 +390,7 @@ public class DBFunctions
             e.printStackTrace();
         }
     }
-
-    public void displayHeroesByWeaponType()
-    {
-        try
-        {
-            PreparedStatement pst = con.prepareStatement("SELECT * FROM weapon_types");
-            ResultSet rs = pst.executeQuery();
-
-            System.out.printf("%-5s%-22s\n", "#", "Weapon Type");
-            boolean first = true;
-            int min = 0;
-            int max = 0;
-
-            while(rs.next())
-            {
-                if(first)
-                {
-                    min = rs.getInt("weapontypeID");
-                    max = rs.getInt("weapontypeID") - 1 ;
-                    first = false;
-                }
-                max++;
-                System.out.printf("%-5s%-22s\n", rs.getString("weapontypeID") + ".", rs.getString("weapon_type_name"));
-            }
-
-            int selection = ic.readInteger(max, min);
-
-
-            pst = con.prepareStatement("SELECT hero_ID, hero_name FROM herocatalog WHERE weapon_type = ?");
-            pst.clearParameters();
-            pst.setInt(1, selection);
-            rs = pst.executeQuery();
-
-            min = 1;
-            max = 1;
-
-            List<CustomHero> customHeroes = new ArrayList<CustomHero>();
-
-            while(rs.next())
-            {
-                CustomHero heroForList = new CustomHero();
-                heroForList.setHeroID(rs.getInt("hero_ID"));
-                heroForList.setHeroName(rs.getString("hero_name"));
-                customHeroes.add(heroForList);
-                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("hero_name"));
-            }
-
-            selection = ic.readInteger(max, min);
-            pst = con.prepareStatement("SELECT * FROM herocatalog WHERE hero_ID = ?");
-            pst.clearParameters();
-            pst.setInt(1, customHeroes.get(selection - 1).getHeroID());
-            rs = pst.executeQuery();
-
-            while(rs.next())
-            {
-                System.out.println("Hero: " + rs.getString("hero_name"));
-                System.out.print("HP:" + rs.getInt("HP"));
-                System.out.print(" ATK:" + rs.getInt("ATK"));
-                System.out.print(" SPD:" + rs.getInt("SPD"));
-                System.out.print(" DEF:" + rs.getInt("DEF"));
-                System.out.print(" RES:" + rs.getInt("RES"));
-                System.out.println();
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    
 
 
     public int displayAllCustomHeroes()
@@ -465,7 +404,7 @@ public class DBFunctions
 
             System.out.printf("%-5s%-22s\n", "#", "Hero Name");
             int min = 1;
-            int max = 1;
+            int max = 0;
 
             List<CustomHero> customHeroes = new ArrayList<CustomHero>();
 
@@ -475,7 +414,8 @@ public class DBFunctions
                 heroForList.setHeroID(rs.getInt("hero_ID"));
                 heroForList.setHeroName(rs.getString("hero_name"));
                 customHeroes.add(heroForList);
-                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("hero_name"));
+                max++;
+                System.out.printf("%-5s%-22s\n", max + ".", rs.getString("hero_name"));
             }
 
             int selection = ic.readInteger(max, min);
@@ -580,6 +520,11 @@ public class DBFunctions
             {
                 System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
             }
+    
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+            
+            
         }
         catch (SQLException e)
         {
@@ -600,6 +545,9 @@ public class DBFunctions
             {
                 System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
             }
+    
+            rs = pst.executeQuery();
+            saveToCSV(rs);
         }
         catch (SQLException e)
         {
@@ -617,7 +565,7 @@ public class DBFunctions
             
             System.out.println("Please select the weapon type you would like to display");
             int min = 1;
-            int max = 1;
+            int max = 0;
     
             List<CustomHero> customHeroes = new ArrayList<CustomHero>();
     
@@ -626,7 +574,8 @@ public class DBFunctions
                 CustomHero heroForList = new CustomHero();
                 heroForList.setWeaponType(rs.getInt("weapontypeID"));
                 customHeroes.add(heroForList);
-                System.out.printf("%-5s%-22s\n", max++ + ".", rs.getString("weapon_type_name"));
+                max++;
+                System.out.printf("%-5s%-22s\n", max + ".", rs.getString("weapon_type_name"));
             }
     
             int selection = ic.readInteger(max, min);
@@ -658,10 +607,172 @@ public class DBFunctions
             {
                 System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
             }
+    
+            rs = cs.executeQuery();
+            saveToCSV(rs);
         }
         catch (SQLException e)
         {
             e.printStackTrace();
+        }
+    }
+    
+    public void viewStrongestWeaponInWeaponsCatalog()
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayStrongestWeapons()");
+            ResultSet rs = cs.executeQuery();
+    
+            System.out.printf("%-20s%-15s%-20s%-20s\n", "Weapon Name", "Weapon Type", "Weapon Strength", "Weapon Effect");
+    
+            while(rs.next())
+            {
+                System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+            }
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    
+    }
+    
+    public void viewStrongestWeaponInWeaponsCatalogByStrength(int strength)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayStrongestWeaponsByStrength(?)");
+            cs.clearParameters();
+            cs.setInt(1, strength);
+            ResultSet rs = cs.executeQuery();
+        
+            System.out.printf("%-20s%-15s%-20s%-20s\n", "Weapon Name", "Weapon Type", "Weapon Strength", "Weapon Effect");
+        
+            while(rs.next())
+            {
+                System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+            }
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByWeaponType(CustomHero weaponSelection)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByWeaponType(?)");
+            cs.clearParameters();
+            cs.setInt(1, weaponSelection.getWeaponType());
+            ResultSet rs = cs.executeQuery();
+    
+            System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", "Hero Name", "Weapon Type", "Movement Type", "HP", "ATK", "SPD", "DEF", "RES");
+    
+            while(rs.next())
+            {
+                System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
+            }
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public CustomHero displayMovementTypes()
+    {
+        CustomHero userSelection = new CustomHero();
+        try
+        {
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM movement_types");
+            ResultSet rs = pst.executeQuery();
+        
+            System.out.println("Please select the weapon type you would like to display");
+            int min = 1;
+            int max = 0;
+        
+            List<CustomHero> customHeroes = new ArrayList<CustomHero>();
+        
+            while(rs.next())
+            {
+                CustomHero heroForList = new CustomHero();
+                heroForList.setMovementType(rs.getInt("movement_type_ID"));
+                customHeroes.add(heroForList);
+                max++;
+                System.out.printf("%-5s%-22s\n", max + ".", rs.getString("movement_type_name"));
+            }
+        
+            int selection = ic.readInteger(max, min);
+            userSelection.setMovementType(customHeroes.get(selection - 1).getMovementType());
+            
+        
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    
+        return userSelection;
+    }
+    
+    public void viewHeroCatalogByMovementType(CustomHero movementSelection)
+    {
+        System.out.println(movementSelection.getMovementType());
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByMovementType(?)");
+            cs.clearParameters();
+            cs.setInt(1, movementSelection.getMovementType());
+            ResultSet rs = cs.executeQuery();
+        
+            System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", "Hero Name", "Weapon Type", "Movement Type", "HP", "ATK", "SPD", "DEF", "RES");
+        
+            while(rs.next())
+            {
+                System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
+            }
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void saveToCSV(ResultSet rs)
+    {
+        System.out.println("Would you like to save the data into a csv? ");
+        System.out.println("1. Yes 2. No");
+        int saveSelection = ic.readInteger(2,1);
+        if (saveSelection == 1)
+        {
+            try
+            {
+                CSVWriter writer = new CSVWriter(new FileWriter("heroesDatabase.csv"), ',');
+                try
+                {
+            
+                    writer.writeAll(rs, true);
+                    writer.close();
+                } catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
+        
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }
