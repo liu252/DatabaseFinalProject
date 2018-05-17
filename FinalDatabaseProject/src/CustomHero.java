@@ -16,6 +16,7 @@ public class CustomHero
     private int slotASkill;
     private int slotBSkill;
     private int slotCSkill;
+    private int weaponSPDModifier;
 
     public int getHeroID() {
         return heroID;
@@ -145,5 +146,15 @@ public class CustomHero
     public void setMovementType(int movementType)
     {
         this.movementType = movementType;
+    }
+    
+    public int getWeaponSPDModifier()
+    {
+        return weaponSPDModifier;
+    }
+    
+    public void setWeaponSPDModifier(int weaponSPDModifier)
+    {
+        this.weaponSPDModifier = weaponSPDModifier;
     }
 }

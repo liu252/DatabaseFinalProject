@@ -31,9 +31,9 @@ public class DBFunctions
         CustomHero hero = new CustomHero();
         try
         {
-            CallableStatement cs = con.prepareCall("CALL ShowHeroRoster()");
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalog()");
             ResultSet rs = cs.executeQuery();
-            System.out.printf("%-5s%-22s\n", "#", "Hero Name");
+            System.out.printf("%-5s%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n","#", "Hero Name", "Weapon Type", "Movement Type", "HP", "ATK", "SPD", "DEF", "RES");
             boolean first = true;
             int min = 0;
             int max = 0;
@@ -46,8 +46,9 @@ public class DBFunctions
                     first = false;
                 }
                 max++;
-                System.out.printf("%-5s%-22s\n", rs.getInt("hero_ID") + ".", rs.getString("hero_name"));
+                System.out.printf("%-5s%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", rs.getString("hero_ID"),rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
             }
+            System.out.print("Enter Character Choice: ");
             int selection = ic.readInteger(max, min);
             cs = con.prepareCall("CALL SelectHero(?)");
             cs.clearParameters();
@@ -89,24 +90,18 @@ public class DBFunctions
                 CustomHero heroForList = new CustomHero();
                 heroForList.setWeaponID(rs.getInt("weapon_ID"));
                 heroForList.setWeaponATK(rs.getInt("weapon_strength"));
+                heroForList.setWeaponSPDModifier(rs.getInt("weapon_spd_modifier"));
                 customHeroes.add(heroForList);
                 max++;
                 System.out.printf("%-5s%-22s\n", max + ".", rs.getString("weapon_name"));
             }
+            System.out.print("Enter Weapon Choice: ");
             int selection = ic.readInteger(max, min);
             hero.setWeaponID(customHeroes.get(selection - 1).getWeaponID());
             hero.setATK(hero.getATK() + customHeroes.get(selection - 1).getWeaponATK());
-            if(hero.getWeaponID() == 2 || hero.getWeaponID() == 16 || hero.getWeaponID() == 33) {
-                hero.setSPD(hero.getSPD() - 5);
-            }
-            while(rs.next())
+            if(customHeroes.get(selection - 1).getWeaponSPDModifier() != 0)
             {
-                hero.setWeaponID(rs.getInt("weapon_ID"));
-                hero.setATK(hero.getATK() + rs.getInt("weapon_strength"));
-                if(rs.getInt("weapon_ID") == 2 || rs.getInt("weapon_ID") == 16 || rs.getInt("weapon_ID") == 33)
-                {
-                    hero.setSPD(hero.getSPD() - 5);
-                }
+                hero.setSPD(hero.getSPD() + customHeroes.get(selection - 1).getWeaponSPDModifier());
             }
 
         }
@@ -138,7 +133,7 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", rs.getString("assist_ID") + ".", rs.getString("assist_name"));
             }
-
+            System.out.print("Enter Assist Skill Choice: ");
             int selection = ic.readInteger(max, min);
             hero.setAssistID(selection);
         }
@@ -170,6 +165,7 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", rs.getString("special_ID") + ".", rs.getString("special_name"));
             }
+            System.out.print("Enter Special Skill Choice: ");
             int selection = ic.readInteger(max, min);
             hero.setSpecialID(selection);
         }
@@ -204,6 +200,7 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", rs.getString("slotA_ID") + ".", rs.getString("slotA_name"));
             }
+            System.out.print("Enter Slot A Skill Choice: ");
             int selection = ic.readInteger(max, min);
             hero.setSlotASkill(selection);
             cs = con.prepareCall("CALL SelectASkill(?)");
@@ -249,7 +246,7 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", rs.getString("slotB_ID") + ".", rs.getString("slotB_name"));
             }
-
+            System.out.print("Enter Slot B Skill Choice: ");
             int selection = ic.readInteger(max, min);
             hero.setSlotBSkill(selection);
         }
@@ -282,6 +279,7 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", rs.getString("slotC_ID") + ".", rs.getString("slotC_name"));
             }
+            System.out.print("Enter Slot C Skill Choice: ");
             int selection = ic.readInteger(max, min);
             hero.setSlotCSkill(selection);
         }
@@ -325,7 +323,6 @@ public class DBFunctions
             printCustomHeroResults(rs);
             rs = cs.executeQuery();
             saveToCSV(rs);
-            
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -356,8 +353,18 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", max + ".", rs.getString("hero_name"));
             }
+            max++;
+            System.out.println(max + ". Return To Main Menu");
+            System.out.print("Enter Custom Hero Choice: ");
             int selection = ic.readInteger(max, min);
-            heroID = customHeroes.get(selection - 1).getHeroID();
+            if (selection != max)
+            {
+                heroID = customHeroes.get(selection - 1).getHeroID();
+            }
+            else
+            {
+                heroID = -1;
+            }
         }
         catch (SQLException e)
         {
@@ -401,6 +408,7 @@ public class DBFunctions
                 hero.setSpecialID(rs.getInt("special_skill"));
                 hero.setHP(rs.getInt("HP"));
                 hero.setATK(rs.getInt("ATK"));
+                hero.setSPD(rs.getInt("SPD"));
                 hero.setDEF(rs.getInt("DEF"));
                 hero.setRES(rs.getInt("RES"));
                 hero.setSlotASkill(rs.getInt("slotA_skill"));
@@ -414,6 +422,56 @@ public class DBFunctions
             while (rs.next())
             {
                 hero.setWeaponType(rs.getInt("weapon_type"));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return hero;
+    }
+    
+    public CustomHero adjustWeaponModifierStats(CustomHero hero)
+    {
+        try
+        {
+            PreparedStatement pst = con.prepareStatement("SELECT weapon_ID, weapon_strength,weapon_spd_modifier FROM weapons WHERE weapon_ID = ?");
+            pst.clearParameters();
+            pst.setInt(1,hero.getWeaponID());
+            ResultSet rs = pst.executeQuery();
+            while(rs.next())
+            {
+                int weaponSPDModifier = rs.getInt("weapon_spd_modifier");
+                if(weaponSPDModifier != 0)
+                {
+                    int heroSPD = hero.getSPD();
+                    hero.setSPD(heroSPD - rs.getInt("weapon_spd_modifier"));
+                }
+                hero.setATK(hero.getATK() - rs.getInt("weapon_strength"));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return hero;
+    }
+    
+    public CustomHero adjustASlotSkillStats(CustomHero hero)
+    {
+        try
+        {
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM slota_skills WHERE slotA_ID = ?");
+            pst.clearParameters();
+            pst.setInt(1,hero.getSlotASkill());
+            ResultSet rs = pst.executeQuery();
+            while(rs.next())
+            {
+                hero.setATK(hero.getATK() - rs.getInt("atk_modifier"));
+                hero.setSPD(hero.getSPD() - rs.getInt("spd_modifier"));
+                hero.setDEF(hero.getDEF() - rs.getInt("def_modifier"));
+                hero.setRES(hero.getRES() - rs.getInt("res_modifier"));
+                hero.setHP(hero.getHP() - rs.getInt("hp_modifier"));
             }
         }
         catch (SQLException e)
