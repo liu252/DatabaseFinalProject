@@ -1,7 +1,8 @@
 public class MenuSystem
 {
     private InputChecker ic = new InputChecker();
-    private DBFunctions dbf = new DBFunctions();
+    private CustomHeroModifier cmh = new CustomHeroModifier();
+    private CatalogViewer cv = new CatalogViewer();
     public void startMenu()
     {
         boolean quit = false;
@@ -15,10 +16,11 @@ public class MenuSystem
             System.out.println("4: Delete Custom Heroes"); //Update
             System.out.println("5: Display Hero Catalog"); //Query with Filter?
             System.out.println("6: Display Weapon Catalog");
-            System.out.println("7: Quit"); //Quit
+            System.out.println("7: Display Skills Catalog");
+            System.out.println("8: Quit"); //Quit
     
             System.out.print("Enter Menu Choice: ");
-            int menuOptionChosen = ic.readInteger(7, 1);
+            int menuOptionChosen = ic.readInteger(8, 1);
     
             if (menuOptionChosen == 1)
             {
@@ -49,30 +51,36 @@ public class MenuSystem
             }
             else if (menuOptionChosen == 7)
             {
+                displaySkillCatalog();
+            }
+            else if (menuOptionChosen == 8)
+            {
                 System.out.println("Thank you for using the Fire Emblem Heroes Database! We hope you have a good day!");
                 quit = true;
             }
         }
     }
+    
+    
     private void addCustomHero()
     {
         System.out.println("_______________________________________________________________________________________");
         System.out.println("Create Custom Hero Menu: Please choose the specific specifications for your hero!");
         System.out.println("Select Character:");
-        CustomHero hero = dbf.chooseHeroFromDB();
+        CustomHero hero = cmh.chooseHeroFromDB();
         System.out.println("Select Weapon:");
-        hero = dbf.chooseWeaponFromDB(hero);
+        hero = cmh.chooseWeaponFromDB(hero);
         System.out.println("Select Assist Skill:");
-        hero = dbf.chooseAssistFromDB(hero);
+        hero = cmh.chooseAssistFromDB(hero);
         System.out.println("Select Special Skill");
-        hero = dbf.chooseSpecialFromDB(hero);
+        hero = cmh.chooseSpecialFromDB(hero);
         System.out.println("Select A Slot Skill:");
-        hero = dbf.chooseASkillFromDB(hero);
+        hero = cmh.chooseASkillFromDB(hero);
         System.out.println("Select B Slot Skill:");
-        hero = dbf.chooseBSkillFromDB(hero);
+        hero = cmh.chooseBSkillFromDB(hero);
         System.out.println("Select C Slot Skill:");
-        hero = dbf.chooseCSkillFromDB(hero);
-        dbf.saveCustomHero(hero);
+        hero = cmh.chooseCSkillFromDB(hero);
+        cmh.saveCustomHero(hero);
         
         System.out.println("Your hero has been saved in the database.");
     }
@@ -88,15 +96,15 @@ public class MenuSystem
         int customHeroMenuSelection = ic.readInteger(3,1);
         if(customHeroMenuSelection == 1)
         {
-            dbf.viewAllCustomHeroes();
+            cmh.viewAllCustomHeroes();
         }
         if(customHeroMenuSelection == 2)
         {
             System.out.println("Select a saved hero to view info:");
-            int viewSelection = dbf.displayAllCustomHeroesForSelection();
+            int viewSelection = cmh.displayAllCustomHeroesForSelection();
             if (viewSelection != -1)
             {
-                dbf.viewCustomHero(viewSelection);
+                cmh.viewCustomHero(viewSelection);
             }
         }
     }
@@ -105,10 +113,10 @@ public class MenuSystem
     {
         System.out.println("_______________________________________________________________________________________");
         System.out.println("Update Custom Heroes Menu: Please Select a Character to Update!");
-        int updateSelection = dbf.displayAllCustomHeroesForSelection();
+        int updateSelection = cmh.displayAllCustomHeroesForSelection();
         if (updateSelection != -1)
         {
-            CustomHero hero = dbf.findCustomHeroForUpdate(updateSelection);
+            CustomHero hero = cmh.findCustomHeroForUpdate(updateSelection);
             System.out.println("What attribute would you like to update?");
             System.out.println("1. Change Weapon");
             System.out.println("2. Change Assist Skill");
@@ -121,34 +129,34 @@ public class MenuSystem
             boolean cancelUpdate = false;
             if (selection == 1)
             {
-                hero = dbf.adjustWeaponModifierStats(hero);
-                hero = dbf.chooseWeaponFromDB(hero);
+                hero = cmh.adjustWeaponModifierStats(hero);
+                hero = cmh.chooseWeaponFromDB(hero);
             } else if (selection == 2)
             {
-                hero = dbf.chooseAssistFromDB(hero);
+                hero = cmh.chooseAssistFromDB(hero);
             } else if (selection == 3)
             {
-                hero = dbf.chooseSpecialFromDB(hero);
+                hero = cmh.chooseSpecialFromDB(hero);
         
             } else if (selection == 4)
             {
-                hero = dbf.adjustASlotSkillStats(hero);
-                hero = dbf.chooseASkillFromDB(hero);
+                hero = cmh.adjustASlotSkillStats(hero);
+                hero = cmh.chooseASkillFromDB(hero);
         
             } else if (selection == 5)
             {
-                hero = dbf.chooseBSkillFromDB(hero);
+                hero = cmh.chooseBSkillFromDB(hero);
         
             } else if (selection == 6)
             {
-                hero = dbf.chooseCSkillFromDB(hero);
+                hero = cmh.chooseCSkillFromDB(hero);
             } else if (selection == 7)
             {
                 cancelUpdate = true;
             }
             if (!cancelUpdate)
             {
-                dbf.updateCustomHero(hero);
+                cmh.updateCustomHero(hero);
                 System.out.println("Hero Update Successful!");
             } else
             {
@@ -159,10 +167,10 @@ public class MenuSystem
     
     private void deleteCustomHero()
     {
-        int deleteSelection = dbf.displayAllCustomHeroesForSelection();
+        int deleteSelection = cmh.displayAllCustomHeroesForSelection();
         if(deleteSelection != -1)
         {
-            dbf.deleteCustomHero(deleteSelection);
+            cmh.deleteCustomHero(deleteSelection);
         }
     }
     
@@ -178,18 +186,18 @@ public class MenuSystem
         int heroCatalogMenuSelection = ic.readInteger(5,1);
         if (heroCatalogMenuSelection == 1)
         {
-            dbf.viewHeroCatalog();
+            cv.viewHeroCatalog();
         }
         else if (heroCatalogMenuSelection == 2)
         {
-            CustomHero weaponSelection = dbf.displayWeaponTypes();
-            dbf.viewHeroCatalogByWeaponType(weaponSelection);
+            CustomHero weaponSelection = cv.displayWeaponTypes();
+            cv.viewHeroCatalogByWeaponType(weaponSelection);
             
         }
         else if (heroCatalogMenuSelection == 3)
         {
-            CustomHero movementSelection = dbf.displayMovementTypes();
-            dbf.viewHeroCatalogByMovementType(movementSelection);
+            CustomHero movementSelection = cv.displayMovementTypes();
+            cv.viewHeroCatalogByMovementType(movementSelection);
         }
         else if (heroCatalogMenuSelection == 4)
         {
@@ -211,75 +219,75 @@ public class MenuSystem
             {
                 if(heroCatalogSignSelection == 1)
                 {
-                    dbf.viewHeroCatalogByHPGreater(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByHPGreater(heroCatalogStatNumber);
                 }
                 else if (heroCatalogSignSelection == 2)
                 {
-                    dbf.viewHeroCatalogByHPLess(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByHPLess(heroCatalogStatNumber);
                 }
                 else if (heroCatalogSignSelection == 3)
                 {
-                    dbf.viewHeroCatalogByHPEqual(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByHPEqual(heroCatalogStatNumber);
                 }
             }
             else if (heroCatalogStatSelection == 2)
             {
                 if(heroCatalogSignSelection == 1)
                 {
-                    dbf.viewHeroCatalogByATKGreater(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByATKGreater(heroCatalogStatNumber);
                 }
                 else if (heroCatalogSignSelection == 2)
                 {
-                    dbf.viewHeroCatalogByATKLess(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByATKLess(heroCatalogStatNumber);
                 }
                 else if (heroCatalogSignSelection == 3)
                 {
-                    dbf.viewHeroCatalogByATKEqual(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByATKEqual(heroCatalogStatNumber);
                 }
             }
             else if (heroCatalogStatSelection == 3)
             {
                 if(heroCatalogSignSelection == 1)
                 {
-                    dbf.viewHeroCatalogBySPDGreater(heroCatalogStatNumber);
+                    cv.viewHeroCatalogBySPDGreater(heroCatalogStatNumber);
                 }
                 else if (heroCatalogSignSelection == 2)
                 {
-                    dbf.viewHeroCatalogBySPDLess(heroCatalogStatNumber);
+                    cv.viewHeroCatalogBySPDLess(heroCatalogStatNumber);
                 }
                 else if (heroCatalogSignSelection == 3)
                 {
-                    dbf.viewHeroCatalogBySPDEqual(heroCatalogStatNumber);
+                    cv.viewHeroCatalogBySPDEqual(heroCatalogStatNumber);
                 }
             }
             else if (heroCatalogStatSelection == 4)
             {
                 if(heroCatalogSignSelection == 1)
                 {
-                    dbf.viewHeroCatalogByDEFGreater(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByDEFGreater(heroCatalogStatNumber);
                 }
                 else if (heroCatalogSignSelection == 2)
                 {
-                    dbf.viewHeroCatalogByDEFLess(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByDEFLess(heroCatalogStatNumber);
                 }
                 else if (heroCatalogSignSelection == 3)
                 {
-                    dbf.viewHeroCatalogByDEFEqual(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByDEFEqual(heroCatalogStatNumber);
                 }
             }
             else if (heroCatalogStatSelection == 5)
             {
                 if(heroCatalogSignSelection == 1)
                 {
-                    dbf.viewHeroCatalogByRESGreater(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByRESGreater(heroCatalogStatNumber);
                 }
                 else if (heroCatalogSignSelection == 2)
                 {
-                    dbf.viewHeroCatalogByRESLess(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByRESLess(heroCatalogStatNumber);
                 }
                 else if (heroCatalogSignSelection == 3)
                 {
-                    dbf.viewHeroCatalogByRESEqual(heroCatalogStatNumber);
+                    cv.viewHeroCatalogByRESEqual(heroCatalogStatNumber);
                 }
             }
         }
@@ -298,22 +306,55 @@ public class MenuSystem
         int weaponsCatalogMenuSelection = ic.readInteger(5,1);
         if (weaponsCatalogMenuSelection == 1)
         {
-            dbf.viewEntireWeaponsCatalog();
+            cv.viewEntireWeaponsCatalog();
         }
         else if (weaponsCatalogMenuSelection == 2)
         {
-            CustomHero weaponTypeSelection = dbf.displayWeaponTypes();
-            dbf.viewWeaponsCatalogByType(weaponTypeSelection);
+            CustomHero weaponTypeSelection = cv.displayWeaponTypes();
+            cv.viewWeaponsCatalogByType(weaponTypeSelection);
         }
         else if (weaponsCatalogMenuSelection == 3)
         {
-            dbf.viewStrongestWeaponInWeaponsCatalog();
+            cv.viewStrongestWeaponInWeaponsCatalog();
         }
         else if (weaponsCatalogMenuSelection == 4)
         {
             System.out.print("Please enter the minimum strength required for weapon: ");
             int strength = ic.readInteger(0,0);
-            dbf.viewStrongestWeaponInWeaponsCatalogByStrength(strength);
+            cv.viewStrongestWeaponInWeaponsCatalogByStrength(strength);
+        }
+    }
+    
+    private void displaySkillCatalog()
+    {
+        System.out.println("_______________________________________________________________________________________");
+        System.out.println("Display Skill Catalog Menu: Please choose an option from the menu below!");
+        System.out.println("1. Display Assist Skills");
+        System.out.println("2. Display Special Skills");
+        System.out.println("3. Display Slot A Skills");
+        System.out.println("4. Display Slot B Skills");
+        System.out.println("5. Display Slot C Skills");
+        System.out.println("6. Return to Main Menu");
+        int skillsCatalogMenuSelection = ic.readInteger(6,1);
+        if(skillsCatalogMenuSelection == 1)
+        {
+            cv.viewAssistSkills();
+        }
+        else if (skillsCatalogMenuSelection == 2)
+        {
+            cv.viewSpecialSkills();
+        }
+        else if (skillsCatalogMenuSelection == 3)
+        {
+            cv.viewSlotASkills();
+        }
+        else if (skillsCatalogMenuSelection == 4)
+        {
+            cv.viewSlotBSkills();
+        }
+        else if (skillsCatalogMenuSelection == 5)
+        {
+            cv.viewSlotCSkills();
         }
     }
     

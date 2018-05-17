@@ -25,35 +25,55 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MenuSystem.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MenuSystem.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/MenuSystem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1113">
-              <caret line="53" column="13" lean-forward="false" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
+            <state relative-caret-position="42">
+              <caret line="2" column="49" lean-forward="false" selection-start-line="2" selection-start-column="49" selection-end-line="2" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DBFunctions.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DBFunctions.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DBFunctions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="285" column="32" lean-forward="true" selection-start-line="285" selection-start-column="32" selection-end-line="285" selection-end-column="32" />
+            <state relative-caret-position="189">
+              <caret line="9" column="27" lean-forward="true" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3162#3174#0" expanded="true" />
-                <element signature="e#12335#12347#0" expanded="true" />
-                <element signature="e#19418#19430#0" expanded="true" />
-                <element signature="e#22991#23003#0" expanded="true" />
-                <marker date="1526539675864" expanded="true" signature="13973:14017" ph="SELECT * FRO... customheroes" />
-                <marker date="1526539675864" expanded="true" signature="14957:15008" ph="SELECT weapo... weapons" />
-                <marker date="1526539675864" expanded="true" signature="15528:15614" ph="SELECT weapo... weapons" />
-                <marker date="1526539675864" expanded="true" signature="16430:16475" ph="SELECT * FRO... slota_skills" />
-                <marker date="1526539675864" expanded="true" signature="18207:18262" ph="UPDATE customheroes... " />
-                <marker date="1526539675864" expanded="true" signature="18665:18693" ph="SELECT * FRO... weaponsCatalog" />
-                <marker date="1526539675864" expanded="true" signature="19138:19164" ph="SELECT weapo... weapon_types" />
-                <marker date="1526539675864" expanded="true" signature="22696:22724" ph="SELECT * FRO... movement_types" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CatalogViewer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CatalogViewer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-11830">
+              <caret line="14" column="9" lean-forward="true" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <marker date="1526541399660" expanded="true" signature="390:418" ph="SELECT * FRO... weaponscatalog" />
+                <marker date="1526541399660" expanded="true" signature="867:893" ph="SELECT * FRO... weapon_types" />
+                <marker date="1526541399660" expanded="true" signature="4465:4493" ph="SELECT * FRO... movement_types" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomHeroModifier.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CustomHeroModifier.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-10297">
+              <caret line="9" column="49" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="9" selection-end-column="49" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <marker date="1526541083812" expanded="true" signature="13597:13641" ph="SELECT * FRO... customheroes" />
+                <marker date="1526541083812" expanded="true" signature="14581:14632" ph="SELECT weapo... weapons" />
+                <marker date="1526541083812" expanded="true" signature="15152:15238" ph="SELECT weapo... weapons" />
+                <marker date="1526541083812" expanded="true" signature="16054:16099" ph="SELECT * FRO... slota_skills" />
+                <marker date="1526541083812" expanded="true" signature="17835:17890" ph="UPDATE customheroes... " />
               </folding>
             </state>
           </provider>
@@ -83,7 +103,7 @@
       <file leaf-file-name="InputChecker.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/InputChecker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="924">
+            <state relative-caret-position="641">
               <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -132,6 +152,8 @@
         <option value="$PROJECT_DIR$/src/DBConfig.java" />
         <option value="$PROJECT_DIR$/src/InputChecker.java" />
         <option value="$PROJECT_DIR$/src/CustomHero.java" />
+        <option value="$PROJECT_DIR$/src/CustomHeroModifier.java" />
+        <option value="$PROJECT_DIR$/src/CatalogViewer.java" />
         <option value="$PROJECT_DIR$/src/MenuSystem.java" />
         <option value="$PROJECT_DIR$/src/DBFunctions.java" />
       </list>
@@ -163,7 +185,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -180,8 +202,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -334,30 +356,31 @@
       <workItem from="1526515874419" duration="11334000" />
       <workItem from="1526529051385" duration="6482000" />
       <workItem from="1526537108287" duration="2578000" />
+      <workItem from="1526539871854" duration="1671000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50450000" />
+    <option name="totallyTimeSpent" value="52121000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.8913813" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37308148" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12514758" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15628357" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1584318" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -370,6 +393,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293979" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -384,36 +408,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/DBFunctions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8925">
-          <caret line="425" column="49" lean-forward="true" selection-start-line="425" selection-start-column="49" selection-end-line="425" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3162#3174#0" expanded="true" />
-            <element signature="e#12335#12347#0" expanded="true" />
-            <element signature="e#19418#19430#0" expanded="true" />
-            <element signature="e#22991#23003#0" expanded="true" />
-            <marker date="1526539675864" expanded="true" signature="13973:14017" ph="SELECT * FRO... customheroes" />
-            <marker date="1526539675864" expanded="true" signature="14957:15008" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="15528:15614" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="16430:16475" ph="SELECT * FRO... slota_skills" />
-            <marker date="1526539675864" expanded="true" signature="18207:18262" ph="UPDATE customheroes... " />
-            <marker date="1526539675864" expanded="true" signature="18665:18693" ph="SELECT * FRO... weaponsCatalog" />
-            <marker date="1526539675864" expanded="true" signature="19138:19164" ph="SELECT weapo... weapon_types" />
-            <marker date="1526539675864" expanded="true" signature="22696:22724" ph="SELECT * FRO... movement_types" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="5" lean-forward="false" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MenuSystem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2478">
@@ -465,18 +459,6 @@
           <caret line="743" column="26" lean-forward="false" selection-start-line="743" selection-start-column="26" selection-end-line="743" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3162#3174#0" expanded="true" />
-            <element signature="e#12335#12347#0" expanded="true" />
-            <element signature="e#19418#19430#0" expanded="true" />
-            <element signature="e#22991#23003#0" expanded="true" />
-            <marker date="1526539675864" expanded="true" signature="13973:14017" ph="SELECT * FRO... customheroes" />
-            <marker date="1526539675864" expanded="true" signature="14957:15008" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="15528:15614" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="16430:16475" ph="SELECT * FRO... slota_skills" />
-            <marker date="1526539675864" expanded="true" signature="18207:18262" ph="UPDATE customheroes... " />
-            <marker date="1526539675864" expanded="true" signature="18665:18693" ph="SELECT * FRO... weaponsCatalog" />
-            <marker date="1526539675864" expanded="true" signature="19138:19164" ph="SELECT weapo... weapon_types" />
-            <marker date="1526539675864" expanded="true" signature="22696:22724" ph="SELECT * FRO... movement_types" />
           </folding>
         </state>
       </provider>
@@ -495,18 +477,6 @@
           <caret line="653" column="8" lean-forward="true" selection-start-line="653" selection-start-column="8" selection-end-line="653" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3162#3174#0" expanded="true" />
-            <element signature="e#12335#12347#0" expanded="true" />
-            <element signature="e#19418#19430#0" expanded="true" />
-            <element signature="e#22991#23003#0" expanded="true" />
-            <marker date="1526539675864" expanded="true" signature="13973:14017" ph="SELECT * FRO... customheroes" />
-            <marker date="1526539675864" expanded="true" signature="14957:15008" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="15528:15614" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="16430:16475" ph="SELECT * FRO... slota_skills" />
-            <marker date="1526539675864" expanded="true" signature="18207:18262" ph="UPDATE customheroes... " />
-            <marker date="1526539675864" expanded="true" signature="18665:18693" ph="SELECT * FRO... weaponsCatalog" />
-            <marker date="1526539675864" expanded="true" signature="19138:19164" ph="SELECT weapo... weapon_types" />
-            <marker date="1526539675864" expanded="true" signature="22696:22724" ph="SELECT * FRO... movement_types" />
           </folding>
         </state>
       </provider>
@@ -578,18 +548,6 @@
           <caret line="359" column="13" lean-forward="true" selection-start-line="359" selection-start-column="13" selection-end-line="359" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3162#3174#0" expanded="true" />
-            <element signature="e#12335#12347#0" expanded="true" />
-            <element signature="e#19418#19430#0" expanded="true" />
-            <element signature="e#22991#23003#0" expanded="true" />
-            <marker date="1526539675864" expanded="true" signature="13973:14017" ph="SELECT * FRO... customheroes" />
-            <marker date="1526539675864" expanded="true" signature="14957:15008" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="15528:15614" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="16430:16475" ph="SELECT * FRO... slota_skills" />
-            <marker date="1526539675864" expanded="true" signature="18207:18262" ph="UPDATE customheroes... " />
-            <marker date="1526539675864" expanded="true" signature="18665:18693" ph="SELECT * FRO... weaponsCatalog" />
-            <marker date="1526539675864" expanded="true" signature="19138:19164" ph="SELECT weapo... weapon_types" />
-            <marker date="1526539675864" expanded="true" signature="22696:22724" ph="SELECT * FRO... movement_types" />
           </folding>
         </state>
       </provider>
@@ -653,18 +611,6 @@
           <caret line="508" column="4" lean-forward="true" selection-start-line="508" selection-start-column="4" selection-end-line="508" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3162#3174#0" expanded="true" />
-            <element signature="e#12335#12347#0" expanded="true" />
-            <element signature="e#19418#19430#0" expanded="true" />
-            <element signature="e#22991#23003#0" expanded="true" />
-            <marker date="1526539675864" expanded="true" signature="13973:14017" ph="SELECT * FRO... customheroes" />
-            <marker date="1526539675864" expanded="true" signature="14957:15008" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="15528:15614" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="16430:16475" ph="SELECT * FRO... slota_skills" />
-            <marker date="1526539675864" expanded="true" signature="18207:18262" ph="UPDATE customheroes... " />
-            <marker date="1526539675864" expanded="true" signature="18665:18693" ph="SELECT * FRO... weaponsCatalog" />
-            <marker date="1526539675864" expanded="true" signature="19138:19164" ph="SELECT weapo... weapon_types" />
-            <marker date="1526539675864" expanded="true" signature="22696:22724" ph="SELECT * FRO... movement_types" />
           </folding>
         </state>
       </provider>
@@ -728,18 +674,6 @@
           <caret line="86" column="65" lean-forward="false" selection-start-line="86" selection-start-column="65" selection-end-line="86" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3162#3174#0" expanded="true" />
-            <element signature="e#12335#12347#0" expanded="true" />
-            <element signature="e#19418#19430#0" expanded="true" />
-            <element signature="e#22991#23003#0" expanded="true" />
-            <marker date="1526539675864" expanded="true" signature="13973:14017" ph="SELECT * FRO... customheroes" />
-            <marker date="1526539675864" expanded="true" signature="14957:15008" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="15528:15614" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="16430:16475" ph="SELECT * FRO... slota_skills" />
-            <marker date="1526539675864" expanded="true" signature="18207:18262" ph="UPDATE customheroes... " />
-            <marker date="1526539675864" expanded="true" signature="18665:18693" ph="SELECT * FRO... weaponsCatalog" />
-            <marker date="1526539675864" expanded="true" signature="19138:19164" ph="SELECT weapo... weapon_types" />
-            <marker date="1526539675864" expanded="true" signature="22696:22724" ph="SELECT * FRO... movement_types" />
           </folding>
         </state>
       </provider>
@@ -840,18 +774,6 @@
           <caret line="107" column="12" lean-forward="false" selection-start-line="107" selection-start-column="12" selection-end-line="107" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3162#3174#0" expanded="true" />
-            <element signature="e#12335#12347#0" expanded="true" />
-            <element signature="e#19418#19430#0" expanded="true" />
-            <element signature="e#22991#23003#0" expanded="true" />
-            <marker date="1526539675864" expanded="true" signature="13973:14017" ph="SELECT * FRO... customheroes" />
-            <marker date="1526539675864" expanded="true" signature="14957:15008" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="15528:15614" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="16430:16475" ph="SELECT * FRO... slota_skills" />
-            <marker date="1526539675864" expanded="true" signature="18207:18262" ph="UPDATE customheroes... " />
-            <marker date="1526539675864" expanded="true" signature="18665:18693" ph="SELECT * FRO... weaponsCatalog" />
-            <marker date="1526539675864" expanded="true" signature="19138:19164" ph="SELECT weapo... weapon_types" />
-            <marker date="1526539675864" expanded="true" signature="22696:22724" ph="SELECT * FRO... movement_types" />
           </folding>
         </state>
       </provider>
@@ -915,18 +837,6 @@
           <caret line="96" column="9" lean-forward="true" selection-start-line="96" selection-start-column="9" selection-end-line="96" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3162#3174#0" expanded="true" />
-            <element signature="e#12335#12347#0" expanded="true" />
-            <element signature="e#19418#19430#0" expanded="true" />
-            <element signature="e#22991#23003#0" expanded="true" />
-            <marker date="1526539675864" expanded="true" signature="13973:14017" ph="SELECT * FRO... customheroes" />
-            <marker date="1526539675864" expanded="true" signature="14957:15008" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="15528:15614" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="16430:16475" ph="SELECT * FRO... slota_skills" />
-            <marker date="1526539675864" expanded="true" signature="18207:18262" ph="UPDATE customheroes... " />
-            <marker date="1526539675864" expanded="true" signature="18665:18693" ph="SELECT * FRO... weaponsCatalog" />
-            <marker date="1526539675864" expanded="true" signature="19138:19164" ph="SELECT weapo... weapon_types" />
-            <marker date="1526539675864" expanded="true" signature="22696:22724" ph="SELECT * FRO... movement_types" />
           </folding>
         </state>
       </provider>
@@ -940,16 +850,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/InputChecker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="924">
-          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.sql/java/sql/ResultSet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="233">
@@ -958,19 +858,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MenuSystem.java">
+    <entry file="file://$PROJECT_DIR$/src/DBFunctions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1113">
-          <caret line="53" column="13" lean-forward="false" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="189">
+          <caret line="9" column="27" lean-forward="true" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DBConfig.java">
+    <entry file="file://$PROJECT_DIR$/src/CatalogViewer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="27" lean-forward="false" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="-11830">
+          <caret line="14" column="9" lean-forward="true" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1526541399660" expanded="true" signature="390:418" ph="SELECT * FRO... weaponscatalog" />
+            <marker date="1526541399660" expanded="true" signature="867:893" ph="SELECT * FRO... weapon_types" />
+            <marker date="1526541399660" expanded="true" signature="4465:4493" ph="SELECT * FRO... movement_types" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CustomHeroModifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10297">
+          <caret line="9" column="49" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="9" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1526541083812" expanded="true" signature="13597:13641" ph="SELECT * FRO... customheroes" />
+            <marker date="1526541083812" expanded="true" signature="14581:14632" ph="SELECT weapo... weapons" />
+            <marker date="1526541083812" expanded="true" signature="15152:15238" ph="SELECT weapo... weapons" />
+            <marker date="1526541083812" expanded="true" signature="16054:16099" ph="SELECT * FRO... slota_skills" />
+            <marker date="1526541083812" expanded="true" signature="17835:17890" ph="UPDATE customheroes... " />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -993,25 +915,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DBFunctions.java">
+    <entry file="file://$PROJECT_DIR$/src/InputChecker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="285" column="32" lean-forward="true" selection-start-line="285" selection-start-column="32" selection-end-line="285" selection-end-column="32" />
+        <state relative-caret-position="641">
+          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3162#3174#0" expanded="true" />
-            <element signature="e#12335#12347#0" expanded="true" />
-            <element signature="e#19418#19430#0" expanded="true" />
-            <element signature="e#22991#23003#0" expanded="true" />
-            <marker date="1526539675864" expanded="true" signature="13973:14017" ph="SELECT * FRO... customheroes" />
-            <marker date="1526539675864" expanded="true" signature="14957:15008" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="15528:15614" ph="SELECT weapo... weapons" />
-            <marker date="1526539675864" expanded="true" signature="16430:16475" ph="SELECT * FRO... slota_skills" />
-            <marker date="1526539675864" expanded="true" signature="18207:18262" ph="UPDATE customheroes... " />
-            <marker date="1526539675864" expanded="true" signature="18665:18693" ph="SELECT * FRO... weaponsCatalog" />
-            <marker date="1526539675864" expanded="true" signature="19138:19164" ph="SELECT weapo... weapon_types" />
-            <marker date="1526539675864" expanded="true" signature="22696:22724" ph="SELECT * FRO... movement_types" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DBConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="27" lean-forward="false" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MenuSystem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="49" lean-forward="false" selection-start-line="2" selection-start-column="49" selection-end-line="2" selection-end-column="49" />
+          <folding />
         </state>
       </provider>
     </entry>
