@@ -1,7 +1,4 @@
-import com.mysql.fabric.xmlrpc.base.Value;
 import com.opencsv.CSVWriter;
-
-import javax.xml.transform.Result;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -9,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.concurrent.Callable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +23,9 @@ public class DBFunctions
         }
         catch (Exception ex) { ex.printStackTrace(); }
     }
-
-
-    public InputChecker ic = new InputChecker();
-
+    
+    private InputChecker ic = new InputChecker();
+    
     public CustomHero chooseHeroFromDB()
     {
         CustomHero hero = new CustomHero();
@@ -58,7 +53,6 @@ public class DBFunctions
             cs.clearParameters();
             cs.setInt(1, selection);
             rs = cs.executeQuery();
-
             while(rs.next())
             {
                 hero.setHeroID(rs.getInt("hero_ID"));
@@ -78,22 +72,18 @@ public class DBFunctions
         return hero;
     }
 
-    public CustomHero chooseWeaponFromDB(CustomHero heroInfo)
+    public CustomHero chooseWeaponFromDB(CustomHero hero)
     {
-        CustomHero hero = heroInfo;
         try
         {
             CallableStatement cs = con.prepareCall("CALL DisplayWeaponByType(?)");
             cs.clearParameters();
             cs.setInt(1, hero.getWeaponType());
             ResultSet rs = cs.executeQuery();
-
             System.out.printf("%-5s%-22s\n", "#", "Weapon Name");
             int min = 1;
             int max = 0;
-
             List<CustomHero> customHeroes = new ArrayList<CustomHero>();
-
             while(rs.next())
             {
                 CustomHero heroForList = new CustomHero();
@@ -103,15 +93,12 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", max + ".", rs.getString("weapon_name"));
             }
-
             int selection = ic.readInteger(max, min);
             hero.setWeaponID(customHeroes.get(selection - 1).getWeaponID());
             hero.setATK(hero.getATK() + customHeroes.get(selection - 1).getWeaponATK());
-
             if(hero.getWeaponID() == 2 || hero.getWeaponID() == 16 || hero.getWeaponID() == 33) {
                 hero.setSPD(hero.getSPD() - 5);
             }
-
             while(rs.next())
             {
                 hero.setWeaponID(rs.getInt("weapon_ID"));
@@ -127,23 +114,19 @@ public class DBFunctions
         {
             e.printStackTrace();
         }
-
         return hero;
     }
 
-    public CustomHero chooseAssistFromDB(CustomHero heroInfo)
+    public CustomHero chooseAssistFromDB(CustomHero hero)
     {
-        CustomHero hero = heroInfo;
         try
         {
             CallableStatement cs = con.prepareCall("CALL DisplayAssists()");
             ResultSet rs = cs.executeQuery();
-
             System.out.printf("%-5s%-22s\n", "#", "Assist Name");
             boolean first = true;
             int min = 0;
             int max = 0;
-
             while(rs.next())
             {
                 if(first)
@@ -163,23 +146,19 @@ public class DBFunctions
         {
             e.printStackTrace();
         }
-
         return hero;
     }
 
-    public CustomHero chooseSpecialFromDB(CustomHero heroInfo)
+    public CustomHero chooseSpecialFromDB(CustomHero hero)
     {
-        CustomHero hero = heroInfo;
         try
         {
             CallableStatement cs = con.prepareCall("CALL DisplaySpecials()");
             ResultSet rs = cs.executeQuery();
-
             System.out.printf("%-5s%-22s\n", "#", "Special Name");
             boolean first = true;
             int min = 0;
             int max = 0;
-
             while(rs.next())
             {
                 if(first)
@@ -191,7 +170,6 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", rs.getString("special_ID") + ".", rs.getString("special_name"));
             }
-
             int selection = ic.readInteger(max, min);
             hero.setSpecialID(selection);
         }
@@ -203,9 +181,8 @@ public class DBFunctions
         return hero;
     }
 
-    public CustomHero chooseASkillFromDB(CustomHero heroInfo)
+    public CustomHero chooseASkillFromDB(CustomHero hero)
     {
-        CustomHero hero = heroInfo;
         try
         {
             CallableStatement cs = con.prepareCall("CALL DisplayASkills()");
@@ -229,12 +206,10 @@ public class DBFunctions
             }
             int selection = ic.readInteger(max, min);
             hero.setSlotASkill(selection);
-
             cs = con.prepareCall("CALL SelectASkill(?)");
             cs.clearParameters();
             cs.setInt(1, selection);
             rs = cs.executeQuery();
-
             while(rs.next())
             {
                 hero.setATK(hero.getATK() + rs.getInt("atk_modifier"));
@@ -248,13 +223,11 @@ public class DBFunctions
         {
             e.printStackTrace();
         }
-
         return hero;
     }
 
-    public CustomHero chooseBSkillFromDB(CustomHero heroInfo)
+    public CustomHero chooseBSkillFromDB(CustomHero hero)
     {
-        CustomHero hero = heroInfo;
         try
         {
             CallableStatement cs = con.prepareCall("CALL DisplayBSkills()");
@@ -287,9 +260,8 @@ public class DBFunctions
         return hero;
     }
 
-    public CustomHero chooseCSkillFromDB(CustomHero heroInfo)
+    public CustomHero chooseCSkillFromDB(CustomHero hero)
     {
-        CustomHero hero = heroInfo;
         try
         {
             CallableStatement cs = con.prepareCall("CALL DisplayCSkills()");
@@ -299,7 +271,6 @@ public class DBFunctions
             boolean first = true;
             int min = 0;
             int max = 0;
-
             while(rs.next())
             {
                 if(first)
@@ -311,20 +282,17 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", rs.getString("slotC_ID") + ".", rs.getString("slotC_name"));
             }
-
             int selection = ic.readInteger(max, min);
             hero.setSlotCSkill(selection);
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-
         return hero;
     }
 
-    public void saveCustomHero(CustomHero heroInfo)
+    public void saveCustomHero(CustomHero hero)
     {
-        CustomHero hero = heroInfo;
         try
         {
             CallableStatement cs = con.prepareCall("CALL SaveCustomHero(?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -347,24 +315,14 @@ public class DBFunctions
             e.printStackTrace();
         }
     }
-
-    public void viewCustomHero(int heroID)
+    
+    public void viewAllCustomHeroes()
     {
         try
         {
-
-            CallableStatement cs = con.prepareCall("CALL DisplayCustomHeroesWithDetails(?)");
-            cs.clearParameters();
-            cs.setInt(1, heroID);
-
+            CallableStatement cs = con.prepareCall("CALL DisplayAllCustomHeroes()");
             ResultSet rs = cs.executeQuery();
-    
-            System.out.printf("%-15s%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-10s%-20s%-20s%-20s\n", "Hero", "Weapon", "Assist Skill", "Special", "HP", "ATK", "SPD", "DEF", "RES", "Slot A", "SlotB", "SlotC");
-
-            while(rs.next())
-            {
-                System.out.printf("%-15s%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-10s%-20s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12));
-            }
+            printCustomHeroResults(rs);
             rs = cs.executeQuery();
             saveToCSV(rs);
             
@@ -373,41 +331,22 @@ public class DBFunctions
             e.printStackTrace();
         }
     }
-
-    public void deleteCustomHero(int heroID)
-    {
-        try
-        {
-            PreparedStatement pst = con.prepareStatement("UPDATE customheroes SET isDeleted = 1 WHERE hero_ID = ?");
-            pst.clearParameters();
-            pst.setInt(1, heroID);
-            pst.executeUpdate();
-
-            System.out.println("Custom hero has been soft deleted.");
-
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     
-
-
-    public int displayAllCustomHeroes()
+    public int displayAllCustomHeroesForSelection()
     {
         int heroID = 0;
-
+        
         try
         {
             CallableStatement cs = con.prepareCall("CALL DisplayCustomHeroes()");
             ResultSet rs = cs.executeQuery();
-
+            
             System.out.printf("%-5s%-22s\n", "#", "Hero Name");
             int min = 1;
             int max = 0;
-
+            
             List<CustomHero> customHeroes = new ArrayList<CustomHero>();
-
+            
             while(rs.next())
             {
                 CustomHero heroForList = new CustomHero();
@@ -417,13 +356,8 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", max + ".", rs.getString("hero_name"));
             }
-
             int selection = ic.readInteger(max, min);
-
             heroID = customHeroes.get(selection - 1).getHeroID();
-
-
-
         }
         catch (SQLException e)
         {
@@ -431,18 +365,33 @@ public class DBFunctions
         }
         return heroID;
     }
-
+    
+    public void viewCustomHero(int heroID)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayCustomHeroesWithDetails(?)");
+            cs.clearParameters();
+            cs.setInt(1, heroID);
+            ResultSet rs = cs.executeQuery();
+            printCustomHeroResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public CustomHero findCustomHeroForUpdate(int updateSelection)
     {
         CustomHero hero = new CustomHero();
-
         try
         {
             PreparedStatement pst = con.prepareStatement("SELECT * FROM customheroes WHERE hero_ID = ?");
             pst.clearParameters();
             pst.setInt(1,updateSelection);
             ResultSet rs = pst.executeQuery();
-
             while (rs.next())
             {
                 hero.setHeroID(rs.getInt("hero_ID"));
@@ -458,29 +407,24 @@ public class DBFunctions
                 hero.setSlotBSkill(rs.getInt("slotB_skill"));
                 hero.setSlotCSkill(rs.getInt("slotC_skill"));
             }
-
             pst = con.prepareStatement("SELECT weapon_type FROM weapons WHERE weapon_ID = ?");
             pst.clearParameters();
             pst.setInt(1, hero.getWeaponID());
             rs = pst.executeQuery();
-
             while (rs.next())
             {
                 hero.setWeaponType(rs.getInt("weapon_type"));
             }
-
         }
         catch (SQLException e)
         {
             e.printStackTrace();
         }
-
         return hero;
     }
-
-    public void updateCustomHero(CustomHero heroInfo)
+    
+    public void updateCustomHero(CustomHero hero)
     {
-        CustomHero hero = heroInfo;
         try
         {
             CallableStatement cs = con.prepareCall("CALL UpdateCustomHero(?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -498,36 +442,25 @@ public class DBFunctions
             cs.setInt(11, hero.getSlotBSkill());
             cs.setInt(12, hero.getSlotCSkill());
             cs.setInt(13, hero.getHeroID());
-            cs.executeQuery();
+            cs.execute();
         }
         catch (SQLException e)
         {
             e.printStackTrace();
         }
-
     }
-    
-    public void viewHeroCatalog()
+
+    public void deleteCustomHero(int heroID)
     {
         try
         {
-            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalog()");
-            ResultSet rs = cs.executeQuery();
-    
-            System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", "Hero Name", "Weapon Type", "Movement Type", "HP", "ATK", "SPD", "DEF", "RES");
-            
-            while(rs.next())
-            {
-                System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
-            }
-    
-            rs = cs.executeQuery();
-            saveToCSV(rs);
-            
-            
+            PreparedStatement pst = con.prepareStatement("UPDATE customheroes SET isDeleted = 1 WHERE hero_ID = ?");
+            pst.clearParameters();
+            pst.setInt(1, heroID);
+            pst.executeUpdate();
+            System.out.println("Custom hero has been soft deleted.");
         }
-        catch (SQLException e)
-        {
+        catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -538,14 +471,7 @@ public class DBFunctions
         {
             PreparedStatement pst = con.prepareStatement("SELECT * FROM weaponscatalog");
             ResultSet rs = pst.executeQuery();
-    
-            System.out.printf("%-20s%-15s%-20s%-20s\n", "Weapon Name", "Weapon Type", "Weapon Strength", "Weapon Effect");
-            
-            while(rs.next())
-            {
-                System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
-            }
-    
+            printWeaponCatalogResults(rs);
             rs = pst.executeQuery();
             saveToCSV(rs);
         }
@@ -562,7 +488,6 @@ public class DBFunctions
         {
             PreparedStatement pst = con.prepareStatement("SELECT * FROM weapon_types");
             ResultSet rs = pst.executeQuery();
-            
             System.out.println("Please select the weapon type you would like to display");
             int min = 1;
             int max = 0;
@@ -577,19 +502,14 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", max + ".", rs.getString("weapon_type_name"));
             }
-    
             int selection = ic.readInteger(max, min);
             userSelection.setWeaponType(customHeroes.get(selection - 1).getWeaponType());
-            
-            
         }
         catch (SQLException e)
         {
             e.printStackTrace();
         }
-        
         return userSelection;
-    
     }
     
     public void viewWeaponsCatalogByType(CustomHero weaponTypeSelection)
@@ -600,14 +520,7 @@ public class DBFunctions
             cs.clearParameters();
             cs.setInt(1,weaponTypeSelection.getWeaponType());
             ResultSet rs = cs.executeQuery();
-        
-            System.out.printf("%-20s%-15s%-20s%-20s\n", "Weapon Name", "Weapon Type", "Weapon Strength", "Weapon Effect");
-        
-            while(rs.next())
-            {
-                System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
-            }
-    
+            printWeaponCatalogResults(rs);
             rs = cs.executeQuery();
             saveToCSV(rs);
         }
@@ -623,13 +536,7 @@ public class DBFunctions
         {
             CallableStatement cs = con.prepareCall("CALL DisplayStrongestWeapons()");
             ResultSet rs = cs.executeQuery();
-    
-            System.out.printf("%-20s%-15s%-20s%-20s\n", "Weapon Name", "Weapon Type", "Weapon Strength", "Weapon Effect");
-    
-            while(rs.next())
-            {
-                System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
-            }
+            printWeaponCatalogResults(rs);
             rs = cs.executeQuery();
             saveToCSV(rs);
         }
@@ -648,13 +555,23 @@ public class DBFunctions
             cs.clearParameters();
             cs.setInt(1, strength);
             ResultSet rs = cs.executeQuery();
-        
-            System.out.printf("%-20s%-15s%-20s%-20s\n", "Weapon Name", "Weapon Type", "Weapon Strength", "Weapon Effect");
-        
-            while(rs.next())
-            {
-                System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
-            }
+            printWeaponCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalog()
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalog()");
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
             rs = cs.executeQuery();
             saveToCSV(rs);
         }
@@ -672,13 +589,7 @@ public class DBFunctions
             cs.clearParameters();
             cs.setInt(1, weaponSelection.getWeaponType());
             ResultSet rs = cs.executeQuery();
-    
-            System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", "Hero Name", "Weapon Type", "Movement Type", "HP", "ATK", "SPD", "DEF", "RES");
-    
-            while(rs.next())
-            {
-                System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
-            }
+            printHeroCatalogResults(rs);
             rs = cs.executeQuery();
             saveToCSV(rs);
         }
@@ -710,11 +621,8 @@ public class DBFunctions
                 max++;
                 System.out.printf("%-5s%-22s\n", max + ".", rs.getString("movement_type_name"));
             }
-        
             int selection = ic.readInteger(max, min);
             userSelection.setMovementType(customHeroes.get(selection - 1).getMovementType());
-            
-        
         }
         catch (SQLException e)
         {
@@ -733,13 +641,7 @@ public class DBFunctions
             cs.clearParameters();
             cs.setInt(1, movementSelection.getMovementType());
             ResultSet rs = cs.executeQuery();
-        
-            System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", "Hero Name", "Weapon Type", "Movement Type", "HP", "ATK", "SPD", "DEF", "RES");
-        
-            while(rs.next())
-            {
-                System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8));
-            }
+            printHeroCatalogResults(rs);
             rs = cs.executeQuery();
             saveToCSV(rs);
         }
@@ -749,7 +651,328 @@ public class DBFunctions
         }
     }
     
-    public void saveToCSV(ResultSet rs)
+    public void viewHeroCatalogByHPGreater(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByHPGreater(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByHPEqual(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByHPEqual(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByHPLess(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByHPLess(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByATKGreater(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByATKGreater(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByATKEqual(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByATKEqual(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByATKLess(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByATKLess(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogBySPDGreater(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogBySPDGreater(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogBySPDEqual(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogBySPDEqual(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogBySPDLess(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogBySPDLess(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByDEFGreater(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByDEFGreater(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByDEFEqual(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByDEFEqual(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+            
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByDEFLess(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByATKLess(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    public void viewHeroCatalogByRESGreater(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByRESGreater(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByRESEqual(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByRESEqual(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void viewHeroCatalogByRESLess(int heroCatalogStatNumber)
+    {
+        try
+        {
+            CallableStatement cs = con.prepareCall("CALL DisplayHeroCatalogByRESLess(?)");
+            cs.clearParameters();
+            cs.setInt(1,heroCatalogStatNumber);
+            ResultSet rs = cs.executeQuery();
+            printHeroCatalogResults(rs);
+            rs = cs.executeQuery();
+            saveToCSV(rs);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    private void printHeroCatalogResults(ResultSet rs)
+    {
+        try
+        {
+            System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", "Hero Name", "Weapon Type", "Movement Type", "HP", "ATK", "SPD", "DEF", "RES");
+    
+            while (rs.next())
+            {
+                System.out.printf("%-15s%-15s%-15s%-5s%-5s%-5s%-5s%-5s\n", rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    private void printWeaponCatalogResults(ResultSet rs)
+    {
+        try
+        {
+            System.out.printf("%-20s%-15s%-20s%-20s\n", "Weapon Name", "Weapon Type", "Weapon Strength", "Weapon Effect");
+    
+            while(rs.next())
+            {
+                System.out.printf("%-20s%-15s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    private void printCustomHeroResults(ResultSet rs)
+    {
+        try
+        {
+            System.out.printf("%-15s%-20s%-15s%-15s%-5s%-5s%-5s%-5s%-10s%-20s%-20s%-20s\n", "Hero", "Weapon", "Assist Skill", "Special", "HP", "ATK", "SPD", "DEF", "RES", "Slot A", "SlotB", "SlotC");
+    
+            while(rs.next())
+            {
+                System.out.printf("%-15s%-20s%-15s%-15s%-5s%-5s%-5s%-5s%-10s%-20s%-20s%-20s\n", rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12));
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    private void saveToCSV(ResultSet rs)
     {
         System.out.println("Would you like to save the data into a csv? ");
         System.out.println("1. Yes 2. No");
@@ -761,15 +984,15 @@ public class DBFunctions
                 CSVWriter writer = new CSVWriter(new FileWriter("heroesDatabase.csv"), ',');
                 try
                 {
-            
                     writer.writeAll(rs, true);
                     writer.close();
-                } catch (SQLException e)
+                }
+                catch (SQLException e)
                 {
                     e.printStackTrace();
                 }
-        
-            } catch (IOException e)
+            }
+            catch (IOException e)
             {
                 e.printStackTrace();
             }

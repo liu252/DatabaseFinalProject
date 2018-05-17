@@ -45,7 +45,4 @@ public class InputChecker
         return inputCheck;
     }
 
-    /*public void doubleCheck(String input, int max, int min)
-    {
-    }*/
 }
