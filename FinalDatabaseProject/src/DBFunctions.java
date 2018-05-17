@@ -81,7 +81,7 @@ public class DBFunctions
             cs.clearParameters();
             cs.setInt(1, hero.getWeaponType());
             ResultSet rs = cs.executeQuery();
-            System.out.printf("%-5s%-22s\n", "#", "Weapon Name");
+            System.out.printf("%-5s%-20s%-15s%-20s%-20s\n","#", "Weapon Name", "Weapon Type", "Weapon Strength", "Weapon Effect");
             int min = 1;
             int max = 0;
             List<CustomHero> customHeroes = new ArrayList<CustomHero>();
@@ -93,7 +93,7 @@ public class DBFunctions
                 heroForList.setWeaponSPDModifier(rs.getInt("weapon_spd_modifier"));
                 customHeroes.add(heroForList);
                 max++;
-                System.out.printf("%-5s%-22s\n", max + ".", rs.getString("weapon_name"));
+                System.out.printf("%-5s%-20s%-15s%-20s%-20s\n", max + ".",rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
             }
             System.out.print("Enter Weapon Choice: ");
             int selection = ic.readInteger(max, min);
@@ -118,7 +118,7 @@ public class DBFunctions
         {
             CallableStatement cs = con.prepareCall("CALL DisplayAssists()");
             ResultSet rs = cs.executeQuery();
-            System.out.printf("%-5s%-22s\n", "#", "Assist Name");
+            System.out.printf("%-5s%-22s%-22s\n", "#", "Assist Name","Description");
             boolean first = true;
             int min = 0;
             int max = 0;
@@ -131,7 +131,7 @@ public class DBFunctions
                     first = false;
                 }
                 max++;
-                System.out.printf("%-5s%-22s\n", rs.getString("assist_ID") + ".", rs.getString("assist_name"));
+                System.out.printf("%-5s%-22s%-22s\n", rs.getString("assist_ID") + ".", rs.getString("assist_name"), rs.getString("assist_description"));
             }
             System.out.print("Enter Assist Skill Choice: ");
             int selection = ic.readInteger(max, min);
@@ -150,7 +150,7 @@ public class DBFunctions
         {
             CallableStatement cs = con.prepareCall("CALL DisplaySpecials()");
             ResultSet rs = cs.executeQuery();
-            System.out.printf("%-5s%-22s\n", "#", "Special Name");
+            System.out.printf("%-5s%-22s%-15s%-22s\n", "#", "Special Name", "Cool Down", "Description");
             boolean first = true;
             int min = 0;
             int max = 0;
@@ -163,7 +163,7 @@ public class DBFunctions
                     first = false;
                 }
                 max++;
-                System.out.printf("%-5s%-22s\n", rs.getString("special_ID") + ".", rs.getString("special_name"));
+                System.out.printf("%-5s%-22s%-15s%-22s\n", rs.getString("special_ID") + ".", rs.getString("special_name"), rs.getString("cooldown"), rs.getString("special_description"));
             }
             System.out.print("Enter Special Skill Choice: ");
             int selection = ic.readInteger(max, min);
@@ -184,7 +184,7 @@ public class DBFunctions
             CallableStatement cs = con.prepareCall("CALL DisplayASkills()");
             ResultSet rs = cs.executeQuery();
 
-            System.out.printf("%-5s%-22s\n", "#", "Skill Name");
+            System.out.printf("%-5s%-22s%-15s%-15s%-15s%-15s%-15s\n", "#", "Skill Name", "HP Modifier","ATK Modifier", "SPD Modifier", "DEF Modifier", "RES Modifier");
             boolean first = true;
             int min = 0;
             int max = 0;
@@ -198,7 +198,7 @@ public class DBFunctions
                     first = false;
                 }
                 max++;
-                System.out.printf("%-5s%-22s\n", rs.getString("slotA_ID") + ".", rs.getString("slotA_name"));
+                System.out.printf("%-5s%-22s%-15s%-15s%-15s%-15s%-15s\n", rs.getString("slotA_ID") + ".", rs.getString("slotA_name"),rs.getString("hp_modifier"), rs.getString("atk_modifier"), rs.getString("spd_modifier"), rs.getString("def_modifier"), rs.getString("res_modifier"));
             }
             System.out.print("Enter Slot A Skill Choice: ");
             int selection = ic.readInteger(max, min);
@@ -230,7 +230,7 @@ public class DBFunctions
             CallableStatement cs = con.prepareCall("CALL DisplayBSkills()");
             ResultSet rs = cs.executeQuery();
 
-            System.out.printf("%-5s%-22s\n", "#", "Skill Name");
+            System.out.printf("%-5s%-22s%-22s\n", "#", "Skill Name", "Description");
             boolean first = true;
             int min = 0;
             int max = 0;
@@ -244,7 +244,7 @@ public class DBFunctions
                     first = false;
                 }
                 max++;
-                System.out.printf("%-5s%-22s\n", rs.getString("slotB_ID") + ".", rs.getString("slotB_name"));
+                System.out.printf("%-5s%-22s%-22s\n", rs.getString("slotB_ID") + ".", rs.getString("slotB_name"), rs.getString("slotB_description"));
             }
             System.out.print("Enter Slot B Skill Choice: ");
             int selection = ic.readInteger(max, min);
@@ -263,8 +263,8 @@ public class DBFunctions
         {
             CallableStatement cs = con.prepareCall("CALL DisplayCSkills()");
             ResultSet rs = cs.executeQuery();
-
-            System.out.printf("%-5s%-22s\n", "#", "Skill Name");
+    
+            System.out.printf("%-5s%-22s%-22s\n", "#", "Skill Name", "Description");
             boolean first = true;
             int min = 0;
             int max = 0;
@@ -277,7 +277,7 @@ public class DBFunctions
                     first = false;
                 }
                 max++;
-                System.out.printf("%-5s%-22s\n", rs.getString("slotC_ID") + ".", rs.getString("slotC_name"));
+                System.out.printf("%-5s%-22s%-22s\n", rs.getString("slotC_ID") + ".", rs.getString("slotC_name"),rs.getString("slotC_description"));
             }
             System.out.print("Enter Slot C Skill Choice: ");
             int selection = ic.readInteger(max, min);
