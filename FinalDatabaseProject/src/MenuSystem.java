@@ -107,6 +107,7 @@ public class MenuSystem
                 cmh.viewCustomHero(viewSelection);
             }
         }
+        
     }
     
     private void updateCustomHero()
@@ -167,6 +168,8 @@ public class MenuSystem
     
     private void deleteCustomHero()
     {
+        System.out.println("_______________________________________________________________________________________");
+        System.out.println("Delete Custom Hero Menu: Please choose a hero from below to delete!");
         int deleteSelection = cmh.displayAllCustomHeroesForSelection();
         if(deleteSelection != -1)
         {

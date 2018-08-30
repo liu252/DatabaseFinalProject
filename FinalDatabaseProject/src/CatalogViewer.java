@@ -151,7 +151,7 @@ public class CatalogViewer
             PreparedStatement pst = con.prepareStatement("SELECT * FROM movement_types");
             ResultSet rs = pst.executeQuery();
             
-            System.out.println("Please select the weapon type you would like to display");
+            System.out.println("Please select the movement type you would like to display");
             int min = 1;
             int max = 0;
             
